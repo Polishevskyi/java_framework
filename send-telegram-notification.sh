@@ -44,7 +44,7 @@ else
 fi
 
 # Build message for Telegram
-MESSAGE="🚀 <b>Mobile Test Automation Completed!</b>
+MESSAGE="🚀 <b>Test Automation Completed!</b>
 
 📊 <b>Test Statistics:</b>
 • <b>Total tests:</b> $TOTAL_TESTS
