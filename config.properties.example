@@ -1,0 +1,50 @@
+# App Configuration
+# Platform values: android, ios
+platform=android
+# isCloud values: true (cloud), false (local)
+isCloud=false
+
+# Test Data
+test.credentials.username=bob@example.com
+test.credentials.password=10203040
+
+# Appium Server Configuration
+appium.jsPath=/opt/homebrew/lib/node_modules/appium/build/lib/main.js
+appium.nodePath=/opt/homebrew/bin/node
+appium.port=4723
+appium.localUrl=http://127.0.0.1:4723/
+
+# BrowserStack Configuration
+browserstack.username=YOUR_BROWSERSTACK_USERNAME
+browserstack.accessKey=YOUR_BROWSERSTACK_ACCESS_KEY
+browserstack.appiumVersion=2.4.1
+browserstack.hubUrl=http://hub-cloud.browserstack.com/wd/hub/
+
+# Android Local Configuration
+android.local.deviceName=Pixel 6 Pro API 34
+android.local.platformVersion=14.0
+android.local.appPackage=com.saucelabs.mydemoapp.rn
+android.local.appActivity=.MainActivity
+
+# Android Cloud Configuration
+android.cloud.deviceName=Google Pixel 6 Pro
+android.cloud.platformVersion=13.0
+android.cloud.appPackage=com.saucelabs.mydemoapp.rn
+android.cloud.appActivity=.MainActivity
+android.cloud.app=bs://YOUR_ANDROID_APP_ID
+
+# iOS Local Configuration
+ios.local.deviceName=iPhone 16 Pro
+ios.local.platformVersion=18.6
+ios.local.bundleId=com.saucelabs.mydemoapp.rn
+ios.local.udid=YOUR_DEVICE_UDID
+
+# iOS Cloud Configuration
+ios.cloud.deviceName=iPhone 16 Pro
+ios.cloud.platformVersion=18.6
+ios.cloud.bundleId=com.saucelabs.mydemoapp.rn
+ios.cloud.app=bs://YOUR_IOS_APP_ID
+
+# API Configuration
+api.baseUrl=https://petstore.swagger.io
+api.version=/v2
