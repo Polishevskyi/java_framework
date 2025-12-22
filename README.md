@@ -598,6 +598,13 @@ Configure in `mobile-suite.xml`:
 </suite>
 ```
 
+> **⚠️ Important for Local Testing:**  
+> When running mobile tests **locally**, use `thread-count="1"`:
+> ```xml
+> <suite name="Mobile Test Suite" parallel="methods" thread-count="1">
+> ```
+> Local Appium server typically supports only one session at a time. Parallel execution works only on BrowserStack (cloud).
+
 ---
 
 ## 📊 Reporting
