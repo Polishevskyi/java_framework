@@ -1,6 +1,20 @@
 name: API Tests
 
 on:
+  push:
+    branches: [ main, master, develop ]
+    paths:
+      - 'src/main/java/api/**'
+      - 'src/test/java/api/**'
+      - 'pom.xml'
+      - '.github/workflows/api-tests.yml'
+  pull_request:
+    branches: [ main, master, develop ]
+    paths:
+      - 'src/main/java/api/**'
+      - 'src/test/java/api/**'
+      - 'pom.xml'
+      - '.github/workflows/api-tests.yml'
   workflow_dispatch:
 
 permissions:
@@ -40,17 +54,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Download dependencies
-        run: mvn dependency:go-offline -B
+          cache: maven
 
       - name: Create config.properties file
         run: |
