@@ -1,21 +1,8 @@
-name: All Tests (API + Mobile)
+name: All Tests (API + Mobile + Web)
 
 on:
-  push:
-    branches: [ main, master, develop ]
-  pull_request:
-    branches: [ main, master, develop ]
   workflow_dispatch:
     inputs:
-      test_type:
-        description: 'Test type to run'
-        required: false
-        default: 'all'
-        type: choice
-        options:
-          - all
-          - api-only
-          - mobile-only
       platform:
         description: 'Platform for mobile tests'
         required: false
@@ -52,7 +39,6 @@ jobs:
     name: API Tests
     runs-on: ubuntu-latest
     needs: lint-and-format
-    if: ${{ !github.event.inputs.test_type || github.event.inputs.test_type == 'all' || github.event.inputs.test_type == 'api-only' }}
     timeout-minutes: 30
     steps:
       - name: Checkout code
@@ -94,11 +80,65 @@ jobs:
           path: target/surefire-reports/
           retention-days: 7
 
+  web-tests:
+    name: Web Tests (Selenide)
+    runs-on: ubuntu-latest
+    needs: api-tests
+    if: ${{ always() && (needs.api-tests.result == 'success' || needs.api-tests.result == 'skipped') }}
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Create config.properties file
+        run: |
+          cat > config.properties << EOF
+          # Web Configuration
+          web.baseUrl=${{ secrets.WEB_BASE_URL }}
+          web.browser=chrome
+          web.browserSize=1920x1080
+          web.headless=true
+          web.timeout=10000
+          web.pageLoadTimeout=30000
+          
+          # Web Test Data
+          web.test.credentials.username=${{ secrets.WEB_TEST_USERNAME }}
+          web.test.credentials.password=${{ secrets.WEB_TEST_PASSWORD }}
+          EOF
+
+      - name: Run Web tests
+        run: mvn clean test -Pweb
+        env:
+          CI: true
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-web
+          path: target/allure-results/
+          retention-days: 30
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-web
+          path: target/surefire-reports/
+          retention-days: 7
+
   mobile-tests:
     name: Mobile Tests on BrowserStack
     runs-on: ubuntu-latest
-    needs: api-tests
-    if: ${{ always() && (needs.api-tests.result == 'success' || needs.api-tests.result == 'skipped') && (!github.event.inputs.test_type || github.event.inputs.test_type == 'all' || github.event.inputs.test_type == 'mobile-only') }}
+    needs: web-tests
+    if: ${{ always() && (needs.web-tests.result == 'success' || needs.web-tests.result == 'skipped') }}
     timeout-minutes: 60
     steps:
       - name: Checkout code
@@ -170,7 +210,7 @@ jobs:
   allure-report:
     name: Generate Allure Report
     runs-on: ubuntu-latest
-    needs: [ api-tests, mobile-tests ]
+    needs: [ api-tests, web-tests, mobile-tests ]
     if: always()
 
     steps:

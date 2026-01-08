@@ -48,3 +48,15 @@ ios.cloud.app=bs://YOUR_IOS_APP_ID
 # API Configuration
 api.baseUrl=https://petstore.swagger.io
 api.version=/v2
+
+# Web Configuration
+web.baseUrl=https://www.saucedemo.com
+web.browser=chrome
+web.browserSize=1920x1080
+web.headless=false
+web.timeout=10000
+web.pageLoadTimeout=30000
+
+# Web Test Data
+web.test.credentials.username=standard_user
+web.test.credentials.password=secret_sauce

@@ -30,6 +30,7 @@
 This project is a comprehensive test automation framework that combines:
 
 - **API Testing** through REST Assured with PetStore API
+- **Web Testing** through Selenide with SauceDemo
 - **Mobile Testing** through BrowserStack and local Appium
 - **Automated Reporting** through Allure Reports
 - **Telegram Integration** for test result notifications
@@ -131,6 +132,7 @@ java_mobile/
 | **Testing**        | TestNG           | 7.10.2  | Test framework               |
 | **API Testing**    | REST Assured     | 5.5.1   | API automation               |
 | **Mobile Testing** | Appium           | 9.3.0   | Mobile app automation        |
+| **Web Testing**    | Selenide         | 7.5.1   | Web UI automation            |
 | **WebDriver**      | Selenium         | 4.25.0  | WebDriver implementation     |
 | **Assertions**     | AssertJ          | 3.27.3  | Fluent assertions            |
 | **Reporting**      | Allure           | 2.27.0  | Detailed test reporting      |
@@ -156,7 +158,11 @@ java_mobile/
 
 **API:**
 - **PetStore API** (Swagger)
-- **REST/JSON** 
+- **REST/JSON**
+
+**Web:**
+- **Chrome** (headless/UI mode)
+- **SauceDemo Application** 
 
 ---
 
@@ -433,6 +439,18 @@ ios.cloud.app=bs://YOUR_IOS_APP_ID
 # API Configuration
 api.baseUrl=https://petstore.swagger.io
 api.version=/v2
+
+# Web Configuration
+web.baseUrl=https://www.saucedemo.com
+web.browser=chrome
+web.browserSize=1920x1080
+web.headless=false
+web.timeout=10000
+web.pageLoadTimeout=30000
+
+# Web Test Data
+web.test.credentials.username=standard_user
+web.test.credentials.password=secret_sauce
 ```
 
 ### 🔑 GitHub Secrets
@@ -444,6 +462,10 @@ Configure the following secrets in GitHub (Settings → Secrets and variables �
 | **API Configuration**         |                                 |                                  |          |
 | `API_BASE_URL`                | API base URL                    | `https://petstore.swagger.io`    | ✅       |
 | `API_VERSION`                 | API version path                | `/v2`                            | ✅       |
+| **Web Configuration**         |                                 |                                  |          |
+| `WEB_BASE_URL`                | Web application base URL        | `https://www.saucedemo.com`      | ✅       |
+| `WEB_TEST_USERNAME`           | Web test username               | `standard_user`                  | ✅       |
+| `WEB_TEST_PASSWORD`           | Web test password               | `secret_sauce`                   | ✅       |
 | **BrowserStack**              |                                 |                                  |          |
 | `BROWSERSTACK_USERNAME`       | BrowserStack username           | `your_username`                  | ✅       |
 | `BROWSERSTACK_ACCESS_KEY`     | BrowserStack access key         | `your_access_key`                | ✅       |
@@ -534,6 +556,19 @@ mvn clean test -Papi -Dtest=CreatePetTest
 mvn clean test -Papi -Dapi.baseUrl=https://petstore.swagger.io -Dapi.version=/v2
 ```
 
+#### Web Tests
+
+```bash
+# Run all web tests
+mvn clean test -Pweb
+
+# Run specific web test
+mvn clean test -Pweb -Dtest=LoginTest
+
+# Run web tests with custom config
+mvn clean test -Pweb -Dweb.baseUrl=https://www.saucedemo.com -Dweb.headless=true
+```
+
 #### Mobile Tests
 
 > **💡 Configuration Note:**  
@@ -582,6 +617,25 @@ Configure in `api-suite.xml`:
     </test>
 </suite>
 ```
+
+#### Web Tests Parallel Execution
+
+Configure in `web-suite.xml`:
+
+```xml
+<suite name="Web Test Suite" parallel="classes" thread-count="3">
+    <test name="Web Tests">
+        <classes>
+            <class name="web.LoginTest"/>
+            <class name="web.ShoppingTest"/>
+            <class name="web.CheckoutTest"/>
+        </classes>
+    </test>
+</suite>
+```
+
+> **💡 Parallel Execution on GitHub Actions:**  
+> Web tests run with 3 parallel threads on GitHub Actions runners (ubuntu-latest with 2 CPU cores, 7GB RAM). Each thread runs a separate Chrome instance in headless mode.
 
 #### Mobile Tests Parallel Execution
 
@@ -641,31 +695,37 @@ Automatic notifications about results via `send-telegram-notification.sh`:
 
 ### 🚀 GitHub Actions
 
-Three workflows available:
+Four workflows available:
 
-#### 1. **All Tests Workflow** (`all-tests.yml`) - Automatic
-- **Triggers:** Push to main/master/develop, Pull Requests, Manual
-- **Execution:** API Tests → Mobile Tests → Combined Report
+#### 1. **All Tests Workflow** (`all-tests.yml`) - Manual Only
+- **Triggers:** Manual only (workflow_dispatch)
+- **Execution:** API Tests → Web Tests → Mobile Tests → Combined Report
 - **Use case:** Full regression testing
 
-#### 2. **API Tests Workflow** (`api-tests.yml`) - Manual Only
-- **Triggers:** Manual only (workflow_dispatch)
+#### 2. **API Tests Workflow** (`api-tests.yml`) - Automatic + Manual
+- **Triggers:** Push/PR with changes in `src/main/java/api/**` or `src/test/java/api/**`, Manual
 - **Execution:** API Tests only → Separate Report
-- **Use case:** Quick API validation
+- **Use case:** Quick API validation when API code changes
 
-#### 3. **Mobile Tests Workflow** (`mobile-tests.yml`) - Manual Only
-- **Triggers:** Manual only (workflow_dispatch)
+#### 3. **Web Tests Workflow** (`web-tests.yml`) - Automatic + Manual
+- **Triggers:** Push/PR with changes in `src/main/java/web/**` or `src/test/java/web/**`, Manual
+- **Execution:** Web Tests only (3 parallel threads) → Separate Report
+- **Use case:** Web UI testing when web code changes
+
+#### 4. **Mobile Tests Workflow** (`mobile-tests.yml`) - Automatic + Manual
+- **Triggers:** Push/PR with changes in `src/main/java/mobile/**` or `src/test/java/mobile/**`, Manual
 - **Execution:** Mobile Tests only → Separate Report
-- **Use case:** Platform-specific testing
+- **Use case:** Platform-specific testing when mobile code changes
 
 ### 📋 Workflow Stages
 
 1. **Setup** - install Java and Maven
 2. **Quality Gate** - code quality check with Spotless (blocks test execution if failed)
 3. **API Tests** - execute API tests (if included)
-4. **Mobile Tests** - execute mobile tests (if included)
-5. **Report** - generate Allure reports
-6. **Notify** - send Telegram notifications
+4. **Web Tests** - execute Web tests with 3 parallel threads (if included)
+5. **Mobile Tests** - execute mobile tests (if included)
+6. **Report** - generate Allure reports
+7. **Notify** - send Telegram notifications
 
 ### 🎯 Matrix Testing
 

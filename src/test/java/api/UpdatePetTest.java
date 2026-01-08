@@ -5,15 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import api.models.PetRequestModel;
 import api.models.comparison.ModelAssertions;
 import api.steps.PetSteps;
-import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 import utils.DataGenerator;
 
 public class UpdatePetTest extends BaseApiTest {
 
-    @Test
-    @Description("Verify that pet can be updated successfully with new data")
+    @Test(description = "Verify that pet can be updated successfully with new data")
     public void verifyPetCanBeUpdatedSuccessfully() {
         PetSteps.PetResponse createdPet = PetSteps.createPet();
 

@@ -3,12 +3,10 @@ package mobile;
 import mobile.screens.LoginScreen;
 import mobile.screens.MenuScreen;
 import mobile.screens.ProductsScreen;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utils.ConfigReader;
 import utils.Constants;
-import utils.DataGenerator;
 
 public class NegativeLoginTest extends BaseMobileTest {
 
@@ -19,16 +17,16 @@ public class NegativeLoginTest extends BaseMobileTest {
             {ConfigReader.getProperty("test.credentials.username"), "", Constants.ERROR_PASSWORD_REQUIRED},
             {"", "", Constants.ERROR_USERNAME_REQUIRED},
             {
-                DataGenerator.email(),
+                FAKER.internet().emailAddress(),
                 ConfigReader.getProperty("test.credentials.password"),
                 Constants.ERROR_INVALID_CREDENTIALS
             },
             {
                 ConfigReader.getProperty("test.credentials.username"),
-                DataGenerator.password(),
+                FAKER.internet().password(),
                 Constants.ERROR_INVALID_CREDENTIALS
             },
-            {DataGenerator.email(), DataGenerator.password(), Constants.ERROR_INVALID_CREDENTIALS}
+            {FAKER.internet().emailAddress(), FAKER.internet().password(), Constants.ERROR_INVALID_CREDENTIALS}
         };
     }
 
@@ -50,6 +48,6 @@ public class NegativeLoginTest extends BaseMobileTest {
             actualError = loginScreen.getCredentialsErrorText();
         }
 
-        Assert.assertEquals(actualError, expectedError);
+        softly.assertThat(actualError).isEqualTo(expectedError);
     }
 }

@@ -1,7 +1,6 @@
 package mobile;
 
 import mobile.screens.ProductsScreen;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utils.Constants;
@@ -40,9 +39,8 @@ public class SortTest extends BaseMobileTest {
         }
 
         String actualProductName = productsScreen.getFirstProductName();
-        Assert.assertEquals(
-                actualProductName,
-                expectedProductName,
-                Constants.ASSERT_FIRST_PRODUCT_AFTER_SORTING + expectedProductName);
+        softly.assertThat(actualProductName)
+                .as(Constants.ASSERT_FIRST_PRODUCT_AFTER_SORTING + expectedProductName)
+                .isEqualTo(expectedProductName);
     }
 }

@@ -9,9 +9,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import utils.RetryAnalyzer;
-import utils.listeners.AllureListener;
 
-@Listeners({AllureTestNg.class, AllureListener.class})
+@Listeners({AllureTestNg.class})
 public class BaseApiTest {
     protected SoftAssertions softly;
 

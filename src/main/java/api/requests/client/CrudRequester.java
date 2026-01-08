@@ -11,7 +11,6 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import utils.ConfigReader;
-import utils.listeners.AllureListener;
 
 public class CrudRequester extends BaseRequest implements RequestInterface {
     private static final String API_VERSION = ConfigReader.getProperty("api.version");
@@ -22,16 +21,15 @@ public class CrudRequester extends BaseRequest implements RequestInterface {
     }
 
     @Override
+    @Step("POST request to {this.endpoint}")
     public ValidatableResponse post(BaseModel model) {
-        return AllureListener.log("POST request to " + endpoint.getUrl(), () -> {
-            var body = model == null ? "" : model;
-            return given().spec(requestSpecification)
-                    .body(body)
-                    .post(API_VERSION + endpoint.getUrl())
-                    .then()
-                    .assertThat()
-                    .spec(responseSpecification);
-        });
+        var body = model == null ? "" : model;
+        return given().spec(requestSpecification)
+                .body(body)
+                .post(API_VERSION + endpoint.getUrl())
+                .then()
+                .assertThat()
+                .spec(responseSpecification);
     }
 
     @Override

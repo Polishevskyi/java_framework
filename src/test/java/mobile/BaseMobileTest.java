@@ -1,20 +1,23 @@
 package mobile;
 
+import com.github.javafaker.Faker;
 import io.qameta.allure.testng.AllureTestNg;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import mobile.appium.TestConfig;
 import mobile.appium.driver.AppFactory;
 import mobile.appium.driver.AppiumServerManager;
+import mobile.listeners.BrowserStackListener;
+import org.assertj.core.api.SoftAssertions;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.RetryAnalyzer;
-import utils.listeners.AllureListener;
-import utils.listeners.BrowserStackListener;
 
-@Listeners({AllureTestNg.class, AllureListener.class, BrowserStackListener.class})
+@Listeners({AllureTestNg.class, BrowserStackListener.class})
 public class BaseMobileTest {
+    protected static final Faker FAKER = new Faker();
+    protected SoftAssertions softly;
 
     @BeforeTest
     public void setUpRetry(ITestContext context) {
@@ -30,11 +33,13 @@ public class BaseMobileTest {
 
     @BeforeMethod
     public void launchApp() throws MalformedURLException {
+        this.softly = new SoftAssertions();
         AppFactory.launchApp();
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
+        softly.assertAll();
         AppFactory.quitApp();
     }
 

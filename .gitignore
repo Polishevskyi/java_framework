@@ -111,11 +111,19 @@ testng-temp/
 test-output-thread*/
 
 # ============================================
-# Appium and Mobile Testing
+# Mobile Testing (Appium)
 # ============================================
 node_modules/
 package-lock.json
 .appium/
+
+# ============================================
+# Web Testing (Selenide)
+# ============================================
+.selenium/
+*chromedriver*
+*geckodriver*
+*edgedriver*
 
 # ============================================
 # Temporary and Cache Files

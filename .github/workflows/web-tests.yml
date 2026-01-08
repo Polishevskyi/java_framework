@@ -1,38 +1,21 @@
-name: Mobile Tests
+name: Web Tests
 
 on:
   push:
     branches: [ main, master, develop ]
     paths:
-      - 'src/main/java/mobile/**'
-      - 'src/test/java/mobile/**'
+      - 'src/main/java/web/**'
+      - 'src/test/java/web/**'
       - 'pom.xml'
-      - '.github/workflows/mobile-tests.yml'
+      - '.github/workflows/web-tests.yml'
   pull_request:
     branches: [ main, master, develop ]
     paths:
-      - 'src/main/java/mobile/**'
-      - 'src/test/java/mobile/**'
+      - 'src/main/java/web/**'
+      - 'src/test/java/web/**'
       - 'pom.xml'
-      - '.github/workflows/mobile-tests.yml'
+      - '.github/workflows/web-tests.yml'
   workflow_dispatch:
-    inputs:
-      test_type:
-        description: 'Test type to run'
-        required: false
-        default: 'all'
-        type: choice
-        options:
-          - all
-          - mobile
-      platform:
-        description: 'Platform to run tests on'
-        required: false
-        default: 'android'
-        type: choice
-        options:
-          - android
-          - ios
 
 permissions:
   contents: write
@@ -57,12 +40,11 @@ jobs:
       - name: Check code formatting
         run: mvn spotless:check
 
-  mobile-tests:
-    name: Mobile Tests on BrowserStack
+  web-tests:
+    name: Web Tests (Selenide)
     runs-on: ubuntu-latest
     needs: lint-and-format
-    if: ${{ !github.event.inputs.test_type || github.event.inputs.test_type == 'mobile' || github.event.inputs.test_type == 'all' }}
-    timeout-minutes: 60
+    timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -75,42 +57,23 @@ jobs:
           cache: maven
 
       - name: Create config.properties file
-        env:
-          PLATFORM_INPUT: ${{ github.event.inputs.platform }}
-          PLATFORM_SECRET: ${{ secrets.PLATFORM }}
         run: |
-          PLATFORM_VALUE="${PLATFORM_INPUT:-${PLATFORM_SECRET}}"
           cat > config.properties << EOF
-          # App Configuration
-          platform=${PLATFORM_VALUE}
-          isCloud=true
+          # Web Configuration
+          web.baseUrl=${{ secrets.WEB_BASE_URL }}
+          web.browser=chrome
+          web.browserSize=1920x1080
+          web.headless=true
+          web.timeout=10000
+          web.pageLoadTimeout=30000
           
-          # Test Data
-          test.credentials.username=${{ secrets.TEST_USERNAME }}
-          test.credentials.password=${{ secrets.TEST_PASSWORD }}
-          
-          # BrowserStack Configuration
-          browserstack.username=${{ secrets.BROWSERSTACK_USERNAME }}
-          browserstack.accessKey=${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-          browserstack.appiumVersion=${{ secrets.BROWSERSTACK_APPIUM_VERSION }}
-          browserstack.hubUrl=http://hub-cloud.browserstack.com/wd/hub/
-          
-          # Android Cloud Configuration
-          android.cloud.deviceName=${{ secrets.ANDROID_DEVICE_NAME }}
-          android.cloud.platformVersion=${{ secrets.ANDROID_PLATFORM_VERSION }}
-          android.cloud.appPackage=${{ secrets.ANDROID_APP_PACKAGE }}
-          android.cloud.appActivity=${{ secrets.ANDROID_APP_ACTIVITY }}
-          android.cloud.app=${{ secrets.ANDROID_APP_ID }}
-          
-          # iOS Cloud Configuration
-          ios.cloud.deviceName=${{ secrets.IOS_DEVICE_NAME }}
-          ios.cloud.platformVersion=${{ secrets.IOS_PLATFORM_VERSION }}
-          ios.cloud.bundleId=${{ secrets.IOS_BUNDLE_ID }}
-          ios.cloud.app=${{ secrets.IOS_APP_ID }}
+          # Web Test Data
+          web.test.credentials.username=${{ secrets.WEB_TEST_USERNAME }}
+          web.test.credentials.password=${{ secrets.WEB_TEST_PASSWORD }}
           EOF
 
-      - name: Run Mobile tests
-        run: mvn clean test
+      - name: Run Web tests
+        run: mvn clean test -Pweb
         env:
           CI: true
 
@@ -118,14 +81,22 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-mobile
+          name: allure-results-web
           path: target/allure-results/
           retention-days: 30
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-web
+          path: target/surefire-reports/
+          retention-days: 7
 
   allure-report:
     name: Generate Allure Report
     runs-on: ubuntu-latest
-    needs: [ mobile-tests ]
+    needs: [ web-tests ]
     if: always()
 
     steps:
