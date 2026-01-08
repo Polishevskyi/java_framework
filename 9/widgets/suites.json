@@ -1,1 +1,1 @@
-{"total":1,"items":[{"uid":"ec1e50c311994804769702ecdc4cfb44","name":"Mobile Test Suite","statistic":{"failed":0,"broken":0,"skipped":0,"passed":12,"unknown":0,"total":12}}]}
+{"total":1,"items":[{"uid":"fa500ef0211c965f904b27c4331dd496","name":"Web Test Suite","statistic":{"failed":4,"broken":0,"skipped":0,"passed":0,"unknown":0,"total":4}}]}
