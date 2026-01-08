@@ -220,7 +220,6 @@
                             </suiteXmlFiles>
                             <classpathDependencyExcludes>
                                 <classpathDependencyExclude>com.browserstack:browserstack-java-sdk</classpathDependencyExclude>
-                                <classpathDependencyExclude>com.codeborne:selenide</classpathDependencyExclude>
                             </classpathDependencyExcludes>
                         </configuration>
                     </plugin>
@@ -241,7 +240,6 @@
                             </suiteXmlFiles>
                             <classpathDependencyExcludes>
                                 <classpathDependencyExclude>com.browserstack:browserstack-java-sdk</classpathDependencyExclude>
-                                <classpathDependencyExclude>com.codeborne:selenide</classpathDependencyExclude>
                             </classpathDependencyExcludes>
                         </configuration>
                     </plugin>
