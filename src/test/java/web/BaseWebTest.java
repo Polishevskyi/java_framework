@@ -28,11 +28,11 @@ public class BaseWebTest {
     @BeforeClass
     public void setup() {
         Configuration.baseUrl = ConfigReader.getProperty("web.baseUrl");
-        Configuration.browser = ConfigReader.getProperty("web.browser");
-        Configuration.browserSize = ConfigReader.getProperty("web.browserSize");
-        Configuration.headless = Boolean.parseBoolean(ConfigReader.getProperty("web.headless"));
-        Configuration.timeout = Long.parseLong(ConfigReader.getProperty("web.timeout"));
-        Configuration.pageLoadTimeout = Long.parseLong(ConfigReader.getProperty("web.pageLoadTimeout"));
+        Configuration.browser = "chrome";
+        Configuration.browserSize = "1920x1080";
+        Configuration.headless = true;
+        Configuration.timeout = 10000;
+        Configuration.pageLoadTimeout = 30000;
 
         SelenideLogger.addListener(
                 "AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));

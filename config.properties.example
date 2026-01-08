@@ -51,12 +51,5 @@ api.version=/v2
 
 # Web Configuration
 web.baseUrl=https://www.saucedemo.com
-web.browser=chrome
-web.browserSize=1920x1080
-web.headless=false
-web.timeout=10000
-web.pageLoadTimeout=30000
-
-# Web Test Data
 web.test.credentials.username=standard_user
 web.test.credentials.password=secret_sauce
