@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","4116","Verify that pet can be deleted successfully by ID","API Test Suite","Thu Jan 08 16:19:43 UTC 2026","passed","Thu Jan 08 16:19:48 UTC 2026","api.DeletePetTest","API Tests","api.DeletePetTest","verifyPetCanBeDeletedSuccessfully"
+"","4799","Verify that pet can be retrieved successfully by ID","API Test Suite","Thu Jan 08 16:19:43 UTC 2026","passed","Thu Jan 08 16:19:48 UTC 2026","api.GetPetTest","API Tests","api.GetPetTest","verifyPetCanBeRetrievedById"
+"","5016","Verify that pet can be created successfully with valid data","API Test Suite","Thu Jan 08 16:19:43 UTC 2026","passed","Thu Jan 08 16:19:48 UTC 2026","api.CreatePetTest","API Tests","api.CreatePetTest","verifyPetCanBeCreatedSuccessfully"
+"","5178","Verify that pet can be updated successfully with new data","API Test Suite","Thu Jan 08 16:19:43 UTC 2026","passed","Thu Jan 08 16:19:49 UTC 2026","api.UpdatePetTest","API Tests","api.UpdatePetTest","verifyPetCanBeUpdatedSuccessfully"
