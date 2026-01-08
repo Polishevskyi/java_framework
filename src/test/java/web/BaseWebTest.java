@@ -7,7 +7,6 @@ import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.testng.AllureTestNg;
 import java.util.Arrays;
 import org.assertj.core.api.SoftAssertions;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -28,13 +27,6 @@ public class BaseWebTest {
 
     @BeforeClass
     public void setup() {
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
-        chromeOptions.addArguments("--disable-gpu");
-        chromeOptions.addArguments("--remote-allow-origins=*");
-
-        Configuration.browserCapabilities = chromeOptions;
         Configuration.baseUrl = ConfigReader.getProperty("web.baseUrl");
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";

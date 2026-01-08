@@ -59,7 +59,7 @@ jobs:
       - name: Setup Chrome and ChromeDriver
         uses: browser-actions/setup-chrome@v1
         with:
-          chrome-version: stable
+          chrome-version: 131
 
       - name: Create config.properties file
         run: |
