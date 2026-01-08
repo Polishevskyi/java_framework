@@ -73,7 +73,7 @@ jobs:
           EOF
 
       - name: Run Web tests
-        run: mvn clean test -Pweb
+        run: mvn clean test -Pweb -q
         env:
           CI: true
 
