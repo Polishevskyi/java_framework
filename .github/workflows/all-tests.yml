@@ -70,14 +70,6 @@ jobs:
           path: target/allure-results/
           retention-days: 30
 
-      - name: Upload Test Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: surefire-reports-api
-          path: target/surefire-reports/
-          retention-days: 7
-
   web-tests:
     name: Web Tests
     runs-on: ubuntu-latest
@@ -112,14 +104,6 @@ jobs:
           name: allure-results-web
           path: target/allure-results/
           retention-days: 30
-
-      - name: Upload Test Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: surefire-reports-web
-          path: target/surefire-reports/
-          retention-days: 7
 
   mobile-tests:
     name: Mobile Tests on BrowserStack
@@ -182,14 +166,6 @@ jobs:
           name: allure-results-mobile
           path: target/allure-results/
           retention-days: 30
-
-      - name: Upload Test Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: surefire-reports-mobile
-          path: target/surefire-reports/
-          retention-days: 7
 
   allure-report:
     name: Generate Allure Report
