@@ -3,6 +3,7 @@ package web;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.testng.AllureTestNg;
 import java.util.Arrays;
@@ -26,13 +27,12 @@ public class BaseWebTest {
     }
 
     @BeforeClass
-    public void setup() {
+    public void setUp() {
+        WebDriverManager.chromedriver().setup();
         Configuration.baseUrl = ConfigReader.getProperty("web.baseUrl");
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
         Configuration.headless = true;
-        Configuration.timeout = 10000;
-        Configuration.pageLoadTimeout = 30000;
 
         SelenideLogger.addListener(
                 "AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));

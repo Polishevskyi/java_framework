@@ -34,6 +34,7 @@
 
         <!-- Web Testing -->
         <selenide.version>7.5.1</selenide.version>
+        <webdrivermanager.version>5.9.2</webdrivermanager.version>
 
         <!-- Build Plugins -->
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -104,6 +105,11 @@
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
             <version>${selenide.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
         </dependency>
 
         <!-- API Testing -->
