@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","4378","Verify that user can successfully login and logout","Web Test Suite","Fri Jan 09 14:03:51 UTC 2026","failed","Fri Jan 09 14:03:56 UTC 2026","web.LoginTest","Web Tests","web.LoginTest","successfulLoginAndLogoutTest"
+"","4541","Verify that user can add multiple products to cart and remove one","Web Test Suite","Fri Jan 09 14:04:09 UTC 2026","failed","Fri Jan 09 14:04:14 UTC 2026","web.ShoppingTest","Web Tests","web.ShoppingTest","addMultipleProductsAndRemoveOneTest"
+"","4509","Verify that user can complete checkout process with generated user data","Web Test Suite","Fri Jan 09 14:04:28 UTC 2026","failed","Fri Jan 09 14:04:32 UTC 2026","web.CheckoutTest","Web Tests","web.CheckoutTest","completeCheckoutWithGeneratedUserDataTest"
+"","0","tearDown","Web Test Suite","Fri Jan 09 14:03:43 UTC 2026","failed","Fri Jan 09 14:03:43 UTC 2026","web.LoginTest","Web Tests","web.LoginTest","tearDown"
