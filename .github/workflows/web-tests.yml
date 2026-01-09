@@ -56,11 +56,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Setup Chrome and ChromeDriver
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: 131
-
       - name: Create config.properties file
         run: |
           cat > config.properties << EOF
@@ -74,8 +69,6 @@ jobs:
 
       - name: Run Web tests
         run: mvn clean test -Pweb -q
-        env:
-          CI: true
 
       - name: Upload Allure Results
         if: always()
