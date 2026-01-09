@@ -38,7 +38,7 @@ jobs:
           cache: maven
 
       - name: Check code formatting
-        run: mvn spotless:check
+        run: mvn spotless:check -q
 
   api-tests:
     name: API Tests
@@ -65,9 +65,7 @@ jobs:
           EOF
 
       - name: Run API tests
-        run: mvn clean test -Papi
-        env:
-          CI: true
+        run: mvn clean test -Papi -q
 
       - name: Upload Allure Results
         if: always()

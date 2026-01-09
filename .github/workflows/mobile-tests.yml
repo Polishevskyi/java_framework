@@ -55,7 +55,7 @@ jobs:
           cache: maven
 
       - name: Check code formatting
-        run: mvn spotless:check
+        run: mvn spotless:check -q
 
   mobile-tests:
     name: Mobile Tests on BrowserStack
@@ -110,9 +110,7 @@ jobs:
           EOF
 
       - name: Run Mobile tests
-        run: mvn clean test
-        env:
-          CI: true
+        run: mvn clean test -q
 
       - name: Upload Allure Results
         if: always()

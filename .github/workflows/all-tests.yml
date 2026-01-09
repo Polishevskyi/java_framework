@@ -33,7 +33,7 @@ jobs:
           cache: maven
 
       - name: Check code formatting
-        run: mvn spotless:check
+        run: mvn spotless:check -q
 
   api-tests:
     name: API Tests
@@ -60,9 +60,7 @@ jobs:
           EOF
 
       - name: Run API tests
-        run: mvn clean test -Papi
-        env:
-          CI: true
+        run: mvn clean test -Papi -q
 
       - name: Upload Allure Results
         if: always()
@@ -85,7 +83,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: api-tests
     if: ${{ always() && (needs.api-tests.result == 'success' || needs.api-tests.result == 'skipped') }}
-    timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -102,21 +99,12 @@ jobs:
           cat > config.properties << EOF
           # Web Configuration
           web.baseUrl=${{ secrets.WEB_BASE_URL }}
-          web.browser=chrome
-          web.browserSize=1920x1080
-          web.headless=true
-          web.timeout=10000
-          web.pageLoadTimeout=30000
-          
-          # Web Test Data
           web.test.credentials.username=${{ secrets.WEB_TEST_USERNAME }}
           web.test.credentials.password=${{ secrets.WEB_TEST_PASSWORD }}
           EOF
 
       - name: Run Web tests
-        run: mvn clean test -Pweb
-        env:
-          CI: true
+        run: mvn clean test -Pweb -q
 
       - name: Upload Allure Results
         if: always()
@@ -187,9 +175,7 @@ jobs:
           EOF
 
       - name: Run Mobile tests
-        run: mvn clean test -Pmobile
-        env:
-          CI: true
+        run: mvn clean test -Pmobile -q
 
       - name: Upload Allure Results
         if: always()

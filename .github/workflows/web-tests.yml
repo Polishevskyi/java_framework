@@ -38,7 +38,7 @@ jobs:
           cache: maven
 
       - name: Check code formatting
-        run: mvn spotless:check
+        run: mvn spotless:check -q
 
   web-tests:
     name: Web Tests
