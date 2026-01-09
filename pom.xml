@@ -19,7 +19,7 @@
         <aspectj.version>1.9.22</aspectj.version>
 
         <!-- Mobile Testing -->
-        <selenium.version>4.25.0</selenium.version>
+        <selenium.version>4.27.0</selenium.version>
         <appium.version>9.3.0</appium.version>
         <browserstack-sdk.version>1.18.0</browserstack-sdk.version>
 
