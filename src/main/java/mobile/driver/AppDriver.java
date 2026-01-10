@@ -1,4 +1,4 @@
-package mobile.appium.driver;
+package mobile.driver;
 
 import org.openqa.selenium.WebDriver;
 

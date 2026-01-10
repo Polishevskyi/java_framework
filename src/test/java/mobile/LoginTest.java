@@ -4,8 +4,8 @@ import mobile.screens.LoginScreen;
 import mobile.screens.MenuScreen;
 import mobile.screens.ProductsScreen;
 import org.testng.annotations.Test;
-import utils.ConfigReader;
 import utils.Constants;
+import utils.ProjectConfig;
 
 public class LoginTest extends BaseMobileTest {
     @Test(description = "Verify that user can login with valid credentials")
@@ -13,8 +13,8 @@ public class LoginTest extends BaseMobileTest {
         MenuScreen menuScreen = new ProductsScreen().openMenu();
         LoginScreen loginScreen = menuScreen.navigateToLogin();
 
-        loginScreen.enterUsername(ConfigReader.getProperty("test.credentials.username"));
-        loginScreen.enterPassword(ConfigReader.getProperty("test.credentials.password"));
+        loginScreen.enterUsername(ProjectConfig.CONFIG.getMobileCredentialsUsername());
+        loginScreen.enterPassword(ProjectConfig.CONFIG.getMobileCredentialsPassword());
         loginScreen.tapLoginButton();
 
         ProductsScreen productsScreen = new ProductsScreen();

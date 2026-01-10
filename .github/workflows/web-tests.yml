@@ -60,8 +60,11 @@ jobs:
           cat > config.properties << EOF
           # Web Configuration
           web.baseUrl=${{ secrets.WEB_BASE_URL }}
-          web.test.credentials.username=${{ secrets.WEB_TEST_USERNAME }}
-          web.test.credentials.password=${{ secrets.WEB_TEST_PASSWORD }}
+          web.browser=${{ secrets.WEB_BROWSER }}
+          web.browserSize=${{ secrets.WEB_BROWSER_SIZE }}
+          web.headless=${{ secrets.WEB_HEADLESS }}
+          web.credentials.username=${{ secrets.WEB_USERNAME }}
+          web.credentials.password=${{ secrets.WEB_PASSWORD }}
           EOF
 
       - name: Run Web tests

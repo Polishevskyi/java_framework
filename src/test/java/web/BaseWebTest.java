@@ -14,7 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
-import utils.ConfigReader;
+import utils.ProjectConfig;
 import utils.RetryAnalyzer;
 
 @Listeners({AllureTestNg.class})
@@ -29,10 +29,10 @@ public class BaseWebTest {
     @BeforeClass
     public void setUp() {
         WebDriverManager.chromedriver().setup();
-        Configuration.baseUrl = ConfigReader.getProperty("web.baseUrl");
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
-        Configuration.headless = true;
+        Configuration.baseUrl = ProjectConfig.CONFIG.getWebBaseUrl();
+        Configuration.browser = ProjectConfig.CONFIG.getWebBrowser();
+        Configuration.browserSize = ProjectConfig.CONFIG.getWebBrowserSize();
+        Configuration.headless = ProjectConfig.CONFIG.getWebHeadless();
 
         SelenideLogger.addListener(
                 "AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));

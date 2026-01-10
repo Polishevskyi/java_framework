@@ -31,6 +31,7 @@
         <!-- Utilities -->
         <lombok.version>1.18.38</lombok.version>
         <javafaker.version>1.0.2</javafaker.version>
+        <owner.version>1.0.12</owner.version>
 
         <!-- Web Testing -->
         <selenide.version>7.5.1</selenide.version>
@@ -139,6 +140,11 @@
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>${javafaker.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+            <version>${owner.version}</version>
         </dependency>
     </dependencies>
 

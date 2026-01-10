@@ -61,7 +61,6 @@ jobs:
           cat > config.properties << EOF
           # API Configuration
           api.baseUrl=${{ secrets.API_BASE_URL }}
-          api.version=${{ secrets.API_VERSION }}
           EOF
 
       - name: Run API tests

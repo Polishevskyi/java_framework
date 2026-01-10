@@ -1,7 +1,7 @@
 package web.steps;
 
 import io.qameta.allure.Step;
-import utils.ConfigReader;
+import utils.ProjectConfig;
 import web.pages.LoginPage;
 import web.pages.ProductsPage;
 
@@ -12,8 +12,8 @@ public class UserSteps {
     public static ProductsPage loginUser() {
         return new LoginPage()
                 .open()
-                .enterUsername(ConfigReader.getProperty("web.test.credentials.username"))
-                .enterPassword(ConfigReader.getProperty("web.test.credentials.password"))
+                .enterUsername(ProjectConfig.CONFIG.getWebCredentialsUsername())
+                .enterPassword(ProjectConfig.CONFIG.getWebCredentialsPassword())
                 .clickLoginButton();
     }
 }

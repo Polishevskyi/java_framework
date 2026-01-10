@@ -5,24 +5,24 @@ import mobile.screens.MenuScreen;
 import mobile.screens.ProductsScreen;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import utils.ConfigReader;
 import utils.Constants;
+import utils.ProjectConfig;
 
 public class NegativeLoginTest extends BaseMobileTest {
 
     @DataProvider(name = "invalidCredentials")
     public Object[][] invalidCredentialsData() {
         return new Object[][] {
-            {"", ConfigReader.getProperty("test.credentials.password"), Constants.ERROR_USERNAME_REQUIRED},
-            {ConfigReader.getProperty("test.credentials.username"), "", Constants.ERROR_PASSWORD_REQUIRED},
+            {"", ProjectConfig.CONFIG.getMobileCredentialsPassword(), Constants.ERROR_USERNAME_REQUIRED},
+            {ProjectConfig.CONFIG.getMobileCredentialsUsername(), "", Constants.ERROR_PASSWORD_REQUIRED},
             {"", "", Constants.ERROR_USERNAME_REQUIRED},
             {
                 FAKER.internet().emailAddress(),
-                ConfigReader.getProperty("test.credentials.password"),
+                ProjectConfig.CONFIG.getMobileCredentialsPassword(),
                 Constants.ERROR_INVALID_CREDENTIALS
             },
             {
-                ConfigReader.getProperty("test.credentials.username"),
+                ProjectConfig.CONFIG.getMobileCredentialsUsername(),
                 FAKER.internet().password(),
                 Constants.ERROR_INVALID_CREDENTIALS
             },

@@ -17,21 +17,25 @@ public class ValidatedCrudRequester<T extends BaseModel> extends BaseRequest imp
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T post(BaseModel model) {
         return (T) crudRequester.post(model).extract().as(endpoint.getResponseModel());
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Object get(long id) {
         return (T) crudRequester.get(id).extract().as(endpoint.getResponseModel());
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Object put(BaseModel model) {
         return (T) crudRequester.post(model).extract().as(endpoint.getResponseModel());
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Object delete(long id) {
         return (T) crudRequester.get(id).extract().as(endpoint.getResponseModel());
     }

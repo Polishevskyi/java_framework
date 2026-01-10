@@ -5,7 +5,7 @@ import io.appium.java_client.ios.IOSDriver;
 import io.qameta.allure.Allure;
 import java.time.Duration;
 import java.util.stream.Stream;
-import mobile.appium.driver.AppDriver;
+import mobile.driver.AppDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -45,7 +45,7 @@ public class BaseScreen {
             if (AppDriver.getCurrentDriver() instanceof AndroidDriver) {
                 str = findElement(locator).getText();
             } else if (AppDriver.getCurrentDriver() instanceof IOSDriver) {
-                str = waitUntilElementPresent(locator).getAttribute("label");
+                str = waitUntilElementPresent(locator).getDomAttribute("label");
             }
             return str;
         });

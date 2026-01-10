@@ -4,14 +4,14 @@ import com.github.javafaker.Faker;
 import io.qameta.allure.testng.AllureTestNg;
 import java.net.MalformedURLException;
 import java.util.Arrays;
-import mobile.appium.TestConfig;
-import mobile.appium.driver.AppFactory;
-import mobile.appium.driver.AppiumServerManager;
+import mobile.driver.AppFactory;
+import mobile.driver.AppiumServerManager;
 import mobile.listeners.BrowserStackListener;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import utils.ProjectConfig;
 import utils.RetryAnalyzer;
 
 @Listeners({AllureTestNg.class, BrowserStackListener.class})
@@ -26,7 +26,7 @@ public class BaseMobileTest {
 
     @BeforeSuite
     public static void serverStart() {
-        if (!TestConfig.environment.isCloud()) {
+        if (!Boolean.TRUE.equals(ProjectConfig.CONFIG.getIsCloud())) {
             AppiumServerManager.start();
         }
     }
@@ -45,7 +45,7 @@ public class BaseMobileTest {
 
     @AfterSuite
     public static void serverStop() {
-        if (!TestConfig.environment.isCloud()) {
+        if (!Boolean.TRUE.equals(ProjectConfig.CONFIG.getIsCloud())) {
             AppiumServerManager.stop();
         }
         AppFactory.resetBuildName();

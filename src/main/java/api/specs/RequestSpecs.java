@@ -7,7 +7,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import java.util.List;
-import utils.ConfigReader;
+import utils.ProjectConfig;
 
 public class RequestSpecs {
     private RequestSpecs() {}
@@ -17,7 +17,7 @@ public class RequestSpecs {
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
                 .addFilters(List.of(new RequestLoggingFilter(), new ResponseLoggingFilter(), new AllureRestAssured()))
-                .setBaseUri(ConfigReader.getProperty("api.baseUrl"));
+                .setBaseUri(ProjectConfig.CONFIG.getApiBaseUrl());
     }
 
     public static RequestSpecification petStoreSpec() {

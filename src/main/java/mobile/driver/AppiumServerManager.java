@@ -1,18 +1,18 @@
-package mobile.appium.driver;
+package mobile.driver;
 
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import java.io.File;
-import utils.ConfigReader;
+import utils.ProjectConfig;
 
 public class AppiumServerManager {
     private static AppiumDriverLocalService server;
 
     private static void initialize() {
         AppiumServiceBuilder builder = new AppiumServiceBuilder();
-        builder.withAppiumJS(new File(ConfigReader.getProperty("appium.jsPath")))
-                .usingDriverExecutable(new File(ConfigReader.getProperty("appium.nodePath")))
-                .usingPort(Integer.parseInt(ConfigReader.getProperty("appium.port")));
+        builder.withAppiumJS(new File(ProjectConfig.CONFIG.getAppiumJsPath()))
+                .usingDriverExecutable(new File(ProjectConfig.CONFIG.getAppiumNodePath()))
+                .usingPort(ProjectConfig.CONFIG.getAppiumPort());
         server = AppiumDriverLocalService.buildService(builder);
     }
 

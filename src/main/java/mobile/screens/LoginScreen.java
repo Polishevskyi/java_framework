@@ -3,7 +3,7 @@ package mobile.screens;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import mobile.appium.driver.AppDriver;
+import mobile.driver.AppDriver;
 import org.openqa.selenium.By;
 
 public class LoginScreen extends BaseScreen {

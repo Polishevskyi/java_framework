@@ -1,4 +1,4 @@
-name: All Tests (API + Mobile + Web)
+name: All Tests (API + Web + Mobile)
 
 on:
   workflow_dispatch:
@@ -56,7 +56,6 @@ jobs:
           cat > config.properties << EOF
           # API Configuration
           api.baseUrl=${{ secrets.API_BASE_URL }}
-          api.version=${{ secrets.API_VERSION }}
           EOF
 
       - name: Run API tests
@@ -90,8 +89,11 @@ jobs:
           cat > config.properties << EOF
           # Web Configuration
           web.baseUrl=${{ secrets.WEB_BASE_URL }}
-          web.test.credentials.username=${{ secrets.WEB_TEST_USERNAME }}
-          web.test.credentials.password=${{ secrets.WEB_TEST_PASSWORD }}
+          web.browser=${{ secrets.WEB_BROWSER }}
+          web.browserSize=${{ secrets.WEB_BROWSER_SIZE }}
+          web.headless=${{ secrets.WEB_HEADLESS }}
+          web.credentials.username=${{ secrets.WEB_USERNAME }}
+          web.credentials.password=${{ secrets.WEB_PASSWORD }}
           EOF
 
       - name: Run Web tests
@@ -122,38 +124,38 @@ jobs:
           cache: maven
 
       - name: Create config.properties file
-        env:
-          PLATFORM_INPUT: ${{ github.event.inputs.platform }}
-          PLATFORM_SECRET: ${{ secrets.PLATFORM }}
         run: |
-          PLATFORM_VALUE="${PLATFORM_INPUT:-${PLATFORM_SECRET}}"
+          PLATFORM_VALUE="${{ github.event.inputs.platform }}"
+          if [ -z "$PLATFORM_VALUE" ]; then
+            PLATFORM_VALUE="${{ secrets.MOBILE_PLATFORM }}"
+          fi
           cat > config.properties << EOF
           # App Configuration
-          platform=${PLATFORM_VALUE}
-          isCloud=true
+          mobile.platform=${PLATFORM_VALUE}
+          mobile.isCloud=${{ secrets.MOBILE_IS_CLOUD }}
           
           # Test Data
-          test.credentials.username=${{ secrets.TEST_USERNAME }}
-          test.credentials.password=${{ secrets.TEST_PASSWORD }}
+          mobile.credentials.username=${{ secrets.MOBILE_USERNAME }}
+          mobile.credentials.password=${{ secrets.MOBILE_PASSWORD }}
           
           # BrowserStack Configuration
           browserstack.username=${{ secrets.BROWSERSTACK_USERNAME }}
           browserstack.accessKey=${{ secrets.BROWSERSTACK_ACCESS_KEY }}
           browserstack.appiumVersion=${{ secrets.BROWSERSTACK_APPIUM_VERSION }}
-          browserstack.hubUrl=http://hub-cloud.browserstack.com/wd/hub/
+          browserstack.hubUrl=${{ secrets.BROWSERSTACK_HUB_URL }}
           
           # Android Cloud Configuration
           android.cloud.deviceName=${{ secrets.ANDROID_DEVICE_NAME }}
           android.cloud.platformVersion=${{ secrets.ANDROID_PLATFORM_VERSION }}
           android.cloud.appPackage=${{ secrets.ANDROID_APP_PACKAGE }}
           android.cloud.appActivity=${{ secrets.ANDROID_APP_ACTIVITY }}
-          android.cloud.app=${{ secrets.ANDROID_APP_ID }}
+          browserstack.android.app=${{ secrets.BROWSERSTACK_ANDROID_APP_ID }}
           
           # iOS Cloud Configuration
           ios.cloud.deviceName=${{ secrets.IOS_DEVICE_NAME }}
           ios.cloud.platformVersion=${{ secrets.IOS_PLATFORM_VERSION }}
           ios.cloud.bundleId=${{ secrets.IOS_BUNDLE_ID }}
-          ios.cloud.app=${{ secrets.IOS_APP_ID }}
+          browserstack.ios.app=${{ secrets.BROWSERSTACK_IOS_APP_ID }}
           EOF
 
       - name: Run Mobile tests

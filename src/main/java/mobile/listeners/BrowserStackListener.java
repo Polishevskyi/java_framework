@@ -1,11 +1,11 @@
 package mobile.listeners;
 
 import io.appium.java_client.AppiumDriver;
-import mobile.appium.TestConfig;
-import mobile.appium.driver.AppDriver;
+import mobile.driver.AppDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import utils.ProjectConfig;
 
 public class BrowserStackListener implements ITestListener {
 
@@ -69,7 +69,7 @@ public class BrowserStackListener implements ITestListener {
     }
 
     private boolean shouldProcess() {
-        return TestConfig.environment.isCloud();
+        return Boolean.TRUE.equals(ProjectConfig.CONFIG.getIsCloud());
     }
 
     private AppiumDriver getDriver() {
