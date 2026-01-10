@@ -1,13 +1,23 @@
-# 🚀 Mobile & API Test Automation Framework
+# 🚀 Mobile, Web & API Test Automation Framework
 
-**Professional test automation framework with Java, Appium, REST Assured, TestNG, and Allure reporting**
+**Comprehensive test automation framework for API, Web, and Mobile testing with Java, Appium, REST Assured, Selenide, TestNG, and Allure reporting**
 
-[![Java](https://img.shields.io/badge/Java-11-orange.svg)](https://www.oracle.com/java/)
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
-[![Appium](https://img.shields.io/badge/Appium-9.3.0-orange.svg)](https://appium.io/)
-[![REST Assured](https://img.shields.io/badge/REST%20Assured-5.5.1-green.svg)](https://rest-assured.io/)
 [![TestNG](https://img.shields.io/badge/TestNG-7.10.2-red.svg)](https://testng.org/)
+[![REST Assured](https://img.shields.io/badge/REST%20Assured-5.5.1-green.svg)](https://rest-assured.io/)
+[![Jackson](https://img.shields.io/badge/Jackson-2.19.0-blue.svg)](https://github.com/FasterXML/jackson)
+[![AssertJ](https://img.shields.io/badge/AssertJ-3.27.3-orange.svg)](https://assertj.github.io/doc/)
+[![Selenide](https://img.shields.io/badge/Selenide-7.5.1-green.svg)](https://selenide.org/)
+[![WebDriverManager](https://img.shields.io/badge/WebDriverManager-5.9.2-blue.svg)](https://github.com/bonigarcia/webdrivermanager)
+[![Appium](https://img.shields.io/badge/Appium-9.3.0-orange.svg)](https://appium.io/)
+[![Selenium](https://img.shields.io/badge/Selenium-4.27.0-green.svg)](https://www.selenium.dev/)
+[![BrowserStack](https://img.shields.io/badge/BrowserStack-1.18.0-blue.svg)](https://www.browserstack.com/)
 [![Allure](https://img.shields.io/badge/Allure-2.27.0-red.svg)](https://allure-framework.github.io/)
+[![JavaFaker](https://img.shields.io/badge/JavaFaker-1.0.2-yellow.svg)](https://github.com/DiUS/java-faker)
+[![AspectJ](https://img.shields.io/badge/AspectJ-1.9.22-purple.svg)](https://www.eclipse.org/aspectj/)
+[![Lombok](https://img.shields.io/badge/Lombok-1.18.38-pink.svg)](https://projectlombok.org/)
+[![Owner](https://img.shields.io/badge/Owner-1.0.12-lightgrey.svg)](https://owner.aeonbits.org/)
 
 ---
 
@@ -16,27 +26,31 @@
 - [Project Description](#-project-description)
 - [Architecture & Structure](#-architecture--structure)
 - [Technology Stack](#-technology-stack)
+- [Supported Platforms](#-supported-platforms)
 - [Design Patterns](#-design-patterns)
 - [Configuration & Secrets](#-configuration--secrets)
 - [Quick Start](#-quick-start)
-- [Test Execution](#-test-execution)
 - [Reporting](#-reporting)
 - [CI/CD Integration](#-cicd-integration)
+- [Code Formatting](#-code-formatting)
+- [Appium Setup](#-appium-setup)
+- [Dependencies](#-dependencies)
 
 ---
 
 ## 🎯 Project Description
 
-This project is a comprehensive test automation framework that combines:
+Comprehensive test automation framework for **API**, **Web**, and **Mobile** testing with:
 
-- **API Testing** through REST Assured with PetStore API
-- **Web Testing** through Selenide with SauceDemo
-- **Mobile Testing** through BrowserStack and local Appium
-- **Automated Reporting** through Allure Reports
-- **Telegram Integration** for test result notifications
-- **CI/CD Support** through GitHub Actions
+- **API Testing** - REST Assured with PetStore API (Swagger)
+- **Web Testing** - Selenide with SauceDemo application
+- **Mobile Testing** - Appium with BrowserStack cloud and local execution (Android/iOS)
+- **Reporting** - Allure Reports with GitHub Pages deployment
+- **CI/CD** - GitHub Actions workflows with automatic test execution
+- **Notifications** - Telegram integration for test results
+- **Code Quality** - Spotless code formatting and quality checks
 
-The framework is built on clean architecture principles using modern design patterns to ensure scalability, maintainability, and reliability.
+Built on clean architecture principles using modern design patterns (Singleton, Factory, Builder, Facade, Strategy, Iterator, Adapter, Decorator) for scalability, maintainability, and reliability.
 
 ---
 
@@ -54,32 +68,51 @@ java_mobile/
 │   │   │   │   │   ├── BaseModel.java
 │   │   │   │   │   ├── PetRequestModel.java
 │   │   │   │   │   ├── PetResponseModel.java
+│   │   │   │   │   ├── PetCategoryModel.java
+│   │   │   │   │   ├── PetTagModel.java
 │   │   │   │   │   └── 📁 comparison/   # Model comparison logic
+│   │   │   │   │       ├── ModelComparator.java
+│   │   │   │   │       ├── ModelAssertions.java
+│   │   │   │   │       └── ModelComparisonConfigLoader.java
 │   │   │   │   ├── 📁 requests/         # Request builders
 │   │   │   │   │   ├── BaseRequest.java
 │   │   │   │   │   ├── Endpoint.java
+│   │   │   │   │   ├── RequestInterface.java
 │   │   │   │   │   └── 📁 client/       # CRUD requesters
+│   │   │   │   │       ├── CrudRequester.java
+│   │   │   │   │       └── ValidatedCrudRequester.java
 │   │   │   │   ├── 📁 specs/            # Request/Response specifications
 │   │   │   │   │   ├── RequestSpecs.java
 │   │   │   │   │   └── ResponseSpecs.java
 │   │   │   │   └── 📁 steps/            # Step definitions
 │   │   │   │       └── PetSteps.java
 │   │   │   ├── 📁 mobile/               # Mobile Testing
+│   │   │   │   ├── 📁 driver/           # Driver management
+│   │   │   │   │   ├── AppDriver.java
+│   │   │   │   │   ├── AppFactory.java
+│   │   │   │   │   └── AppiumServerManager.java
 │   │   │   │   ├── 📁 screens/          # Page Object Model
 │   │   │   │   │   ├── BaseScreen.java
 │   │   │   │   │   ├── LoginScreen.java
 │   │   │   │   │   ├── ProductsScreen.java
 │   │   │   │   │   ├── CartScreen.java
 │   │   │   │   │   └── MenuScreen.java
-│   │   │   │   └── 📁 appium/           # Appium setup
-│   │   │   └── 📁 utils/
-│   │   │       ├── ConfigReader.java               # Configuration reader
-│   │   │       ├── Constants.java                  # Constants
-│   │   │       ├── DataGenerator.java              # Factory Pattern for test data
-│   │   │       ├── 📁 listeners/
-│   │   │       │   ├── AllureListener.java         # Allure reporting listener
-│   │   │       │   └── BrowserStackListener.java   # BrowserStack listener
-│   │   │       └── RetryAnalyzer.java              # Retry mechanism
+│   │   │   │   └── 📁 listeners/        # Test listeners
+│   │   │   │       └── BrowserStackListener.java
+│   │   │   ├── 📁 web/                  # Web Testing
+│   │   │   │   ├── 📁 pages/            # Page Object Model
+│   │   │   │   │   ├── BasePage.java
+│   │   │   │   │   ├── LoginPage.java
+│   │   │   │   │   ├── ProductsPage.java
+│   │   │   │   │   ├── CartPage.java
+│   │   │   │   │   └── CheckoutPage.java
+│   │   │   │   └── 📁 steps/            # Step definitions
+│   │   │   │       └── UserSteps.java
+│   │   │   └── 📁 utils/                # Utility classes
+│   │   │       ├── ProjectConfig.java   # Configuration reader
+│   │   │       ├── Constants.java       # Constants
+│   │   │       ├── DataGenerator.java   # Factory Pattern for test data
+│   │   │       └── RetryAnalyzer.java   # Retry mechanism
 │   │   └── 📁 resources/
 │   │       ├── 📁 api/
 │   │       │   └── model-mapping.properties        # Model comparison config
@@ -95,29 +128,28 @@ java_mobile/
 │       │   │   ├── GetPetTest.java                  # Get pet tests
 │       │   │   ├── UpdatePetTest.java               # Update pet tests
 │       │   │   └── DeletePetTest.java               # Delete pet tests
-│       │   └── 📁 mobile/
-│       │       ├── BaseMobileTest.java              # Base mobile test class
+│       │   ├── 📁 mobile/
+│       │   │   ├── BaseMobileTest.java              # Base mobile test class
+│       │   │   ├── LoginTest.java                   # Login tests
+│       │   │   ├── NegativeLoginTest.java           # Negative login tests
+│       │   │   ├── CartTest.java                    # Cart tests
+│       │   │   └── SortTest.java                    # Sort tests
+│       │   └── 📁 web/
+│       │       ├── BaseWebTest.java                 # Base web test class
 │       │       ├── LoginTest.java                   # Login tests
-│       │       ├── NegativeLoginTest.java           # Negative login tests
-│       │       ├── CartTest.java                    # Cart tests
-│       │       └── SortTest.java                    # Sort tests
+│       │       ├── ShoppingTest.java                # Shopping tests
+│       │       └── CheckoutTest.java                # Checkout tests
 │       └── 📁 resources/
 │           ├── api-suite.xml                        # API TestNG suite
-│           └── mobile-suite.xml                     # Mobile TestNG suite
-├── 📁 target/
-│   └── 📁 allure-results/                         # Allure results
+│           ├── mobile-suite.xml                     # Mobile TestNG suite
+│           └── web-suite.xml                        # Web TestNG suite
 ├── config.properties                               # Configuration file
 ├── config.properties.example                      # Configuration template
+├── GITHUB_SECRETS.example                         # GitHub Secrets template
 ├── pom.xml                                         # Maven configuration
+├── README.md                                       # Project documentation
 └── send-telegram-notification.sh                  # Telegram notification script
 ```
-
-### 🔄 Architectural Principles
-
-- **Separation of Concerns** - clear separation of responsibilities
-- **DRY (Don't Repeat Yourself)** - avoiding code duplication
-- **SOLID Principles** - following object-oriented programming principles
-- **Dependency Injection** - dependency inversion for testing
 
 ---
 
@@ -125,67 +157,115 @@ java_mobile/
 
 ### 🎯 Core Technologies
 
-| Category           | Technology        | Version | Purpose                      |
-| ------------------ | ---------------- | ------- | ---------------------------- |
-| **Language**       | Java             | 11      | Programming language         |
-| **Build Tool**     | Maven            | 3.6+    | Dependency management        |
-| **Testing**        | TestNG           | 7.10.2  | Test framework               |
-| **API Testing**    | REST Assured     | 5.5.1   | API automation               |
-| **Mobile Testing** | Appium           | 9.3.0   | Mobile app automation        |
-| **Web Testing**    | Selenide         | 7.5.1   | Web UI automation            |
-| **WebDriver**      | Selenium         | 4.25.0  | WebDriver implementation     |
-| **Assertions**     | AssertJ          | 3.27.3  | Fluent assertions            |
-| **Reporting**      | Allure           | 2.27.0  | Detailed test reporting      |
-| **Cloud Testing**  | BrowserStack SDK | 1.18.0  | Cloud testing platform       |
+| Category          | Technology        | Version | Purpose                      |
+| ----------------- | ----------------- | ------- | ---------------------------- |
+| **Language**      | Java              | 17      | Programming language         |
+| **Build Tool**    | Maven             | 3.6+    | Dependency management        |
+| **Testing**       | TestNG            | 7.10.2  | Test framework               |
+| **API Testing**   | REST Assured      | 5.5.1   | API automation               |
+| **Mobile Testing**| Appium            | 9.3.0   | Mobile app automation        |
+| **Web Testing**   | Selenide          | 7.5.1   | Web UI automation            |
+| **WebDriver**     | Selenium          | 4.27.0  | WebDriver implementation     |
+| **Assertions**    | AssertJ           | 3.27.3  | Fluent assertions            |
+| **Reporting**     | Allure            | 2.27.0  | Detailed test reporting      |
+| **Cloud Testing** | BrowserStack SDK  | 1.18.0  | Cloud testing platform       |
 
 ### 🔧 Additional Tools
 
-| Tool                  | Purpose                             |
-| --------------------- | ----------------------------------- |
-| **JavaFaker**         | Test data generation                |
-| **Jackson**           | JSON serialization/deserialization  |
-| **Spotless Maven**    | Code formatting and quality control |
-| **AspectJ Weaver**    | Allure integration                  |
-| **Maven Surefire**    | Test execution                      |
+| Tool                  | Version | Purpose                             |
+| --------------------- | ------- | ----------------------------------- |
+| **JavaFaker**         | 1.0.2   | Test data generation                |
+| **Jackson**           | 2.19.0  | JSON serialization/deserialization  |
+| **Lombok**            | 1.18.38 | Boilerplate code reduction          |
+| **Owner**             | 1.0.12  | Configuration management            |
+| **WebDriverManager**  | 5.9.2   | WebDriver management                |
+| **Spotless Maven**    | 2.43.0  | Code formatting and quality control |
+| **AspectJ Weaver**    | 1.9.22  | Allure integration                  |
+| **Maven Surefire**    | 3.5.2   | Test execution                      |
 
-### 🌐 Supported Platforms
+---
 
-**Mobile:**
-- **Android**
-- **iOS**
-- **BrowserStack Cloud** 
-- **Local Testing**
+## 🌐 Supported Platforms
 
-**API:**
-- **PetStore API** (Swagger)
-- **REST/JSON**
-
-**Web:**
-- **Chrome** (headless/UI mode)
-- **SauceDemo Application** 
+**Mobile:** Android 13.0+ / iOS 18.6+ (Local & BrowserStack Cloud)  
+**API:** PetStore API (Swagger) - https://petstore.swagger.io/v2 (REST/JSON)  
+**Web:** Chrome, Firefox, Edge, Safari (Windows, macOS, Linux) - SauceDemo - https://www.saucedemo.com
 
 ---
 
 ## 🎨 Design Patterns
 
-### API Testing Patterns
+### Creational Patterns
 
-#### 1. **Request Specification Pattern** (Builder)
+#### 1. Singleton
 
 ```java
-// src/main/java/api/specs/RequestSpecs.java
-public class RequestSpecs {
-    private static RequestSpecBuilder defaultRequestBuilder() {
-        return new RequestSpecBuilder()
-                .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
-                .addFilters(List.of(new AllureRestAssured()))
-                .setBaseUri(ConfigReader.getProperty("api.baseUrl"));
+// src/main/java/utils/ProjectConfig.java
+@Config.Sources("file:config.properties")
+public interface ProjectConfig extends Config {
+    ProjectConfig CONFIG = ConfigFactory.create(ProjectConfig.class);
+}
+```
+
+---
+
+#### 2. Factory Method
+
+```java
+// src/main/java/mobile/driver/AppFactory.java
+public class AppFactory {
+    public static void launchApp() throws MalformedURLException {
+        URI serverUrl = getServerUrl();
+        
+        if ("ios".equalsIgnoreCase(ProjectConfig.CONFIG.getPlatform())) {
+            XCUITestOptions iosOptions = createIosOptions();
+            driver = new IOSDriver(serverUrl.toURL(), iosOptions);
+        } else {
+            UiAutomator2Options androidOptions = createAndroidOptions();
+            driver = new AndroidDriver(serverUrl.toURL(), androidOptions);
+        }
+        
+        AppDriver.setDriver(driver);
     }
 }
 ```
 
-#### 2. **Model-Based Testing Pattern**
+---
+
+#### 3. Abstract Factory
+
+```java
+// src/main/java/mobile/driver/AppFactory.java
+public class AppFactory {
+    private static UiAutomator2Options createAndroidOptions() {
+        UiAutomator2Options options = new UiAutomator2Options();
+        boolean isCloud = Boolean.TRUE.equals(ProjectConfig.CONFIG.getIsCloud());
+        
+        if (isCloud) {
+            options.setDeviceName(ProjectConfig.CONFIG.getAndroidCloudDeviceName())
+                    .setPlatformVersion(ProjectConfig.CONFIG.getAndroidCloudPlatformVersion())
+                    .setAppPackage(ProjectConfig.CONFIG.getAndroidCloudAppPackage())
+                    .setAppActivity(ProjectConfig.CONFIG.getAndroidCloudAppActivity());
+        } else {
+            options.setDeviceName(ProjectConfig.CONFIG.getAndroidLocalDeviceName())
+                    .setPlatformVersion(ProjectConfig.CONFIG.getAndroidLocalPlatformVersion())
+                    .setAppPackage(ProjectConfig.CONFIG.getAndroidLocalAppPackage())
+                    .setAppActivity(ProjectConfig.CONFIG.getAndroidLocalAppActivity());
+        }
+        return options;
+    }
+    
+    private static XCUITestOptions createIosOptions() {
+        XCUITestOptions options = new XCUITestOptions();
+        // Similar iOS options configuration
+        return options;
+    }
+}
+```
+
+---
+
+#### 4. Builder
 
 ```java
 // src/main/java/api/models/PetRequestModel.java
@@ -198,185 +278,118 @@ public class PetRequestModel extends BaseModel {
     private PetCategoryModel category;
     private List<PetTagModel> tags;
 }
+
+// Usage:
+PetRequestModel pet = PetRequestModel.builder()
+        .id(1L)
+        .name("Fluffy")
+        .status("available")
+        .category(category)
+        .tags(tags)
+        .build();
 ```
 
-#### 3. **Step Pattern** (Readable Test Steps)
+---
+
+### Structural Patterns
+
+#### 5. Adapter
 
 ```java
-// src/main/java/api/steps/PetSteps.java
-public class PetSteps {
-    @Step("Create new pet with name: {petName}")
-    public PetResponseModel createPet(String petName, String status) {
-        // Business logic for creating pet
-    }
-}
-```
-
-#### 4. **CRUD Requester Pattern** (Endpoint abstraction)
-
-```java
-// src/main/java/api/requests/client/CrudRequester.java
-public class CrudRequester extends BaseRequest {
-    @Override
-    public ValidatableResponse post(BaseModel model) {
-        return given().spec(requestSpecification)
-                .body(model)
-                .post(API_VERSION + endpoint.getUrl())
-                .then()
-                .assertThat()
-                .spec(responseSpecification);
-    }
-}
-```
-
-#### 5. **Model Comparison Pattern** (Flexible validation)
-
-```java
-// src/main/java/api/models/comparison/ModelComparator.java
-public class ModelComparator {
-    public static void compareModels(BaseModel expected, BaseModel actual, 
-                                    SoftAssertions softly) {
-        // Smart model comparison with configurable fields
-    }
-}
-```
-
-#### 6. **Endpoint Enum Pattern**
-
-```java
-// src/main/java/api/requests/Endpoint.java
-public enum Endpoint {
-    CREATE_PET("/pet", PetRequestModel.class, PetResponseModel.class),
-    GET_PET("/pet/{petId}", BaseModel.class, PetResponseModel.class),
-    UPDATE_PET("/pet", PetRequestModel.class, PetResponseModel.class),
-    DELETE_PET("/pet/{petId}", BaseModel.class, PetResponseModel.class);
-}
-```
-
-### Mobile Testing Patterns
-
-#### 1. **Page Object Model (POM)**
-
-```java
-// src/main/java/screens/BaseScreen.java
-public class BaseScreen {
-    protected WebElement waitUntilElementPresent(By locator) {
-        // Common wait logic
-    }
+// src/main/java/api/requests/client/ValidatedCrudRequester.java
+public class ValidatedCrudRequester<T extends BaseModel> 
+        extends BaseRequest implements RequestInterface {
+    private CrudRequester crudRequester;
     
-    protected void tap(By locator) {
-        // Common tap logic with Allure logging
-    }
-}
-
-// src/main/java/screens/LoginScreen.java
-public class LoginScreen extends BaseScreen {
-    // Specific methods for login page
-}
-```
-
-#### 2. **Factory Pattern** (Driver Creation)
-
-```java
-// src/main/java/utils/appium/driver/AppFactory.java
-public class AppFactory {
-    public static void launchApp() throws MalformedURLException {
-        if (TestConfig.platform == Platform.IOS) {
-            driver = new IOSDriver(serverUrl.toURL(), iosOptions);
-        } else {
-            driver = new AndroidDriver(serverUrl.toURL(), androidOptions);
-        }
-        AppDriver.setDriver(driver);
-    }
-}
-```
-
-#### 3. **Factory Pattern** (Data Generation)
-
-```java
-// src/main/java/utils/DataGenerator.java
-public final class DataGenerator {
-    private static final Faker FAKER = new Faker();
-    
-    public static String email() {
-        return FAKER.internet().emailAddress();
-    }
-    
-    public static String password() {
-        return FAKER.internet().password(...);
-    }
-}
-```
-
-#### 4. **Singleton Pattern** (Driver Management)
-
-```java
-// src/main/java/utils/appium/driver/AppDriver.java
-public class AppDriver {
-    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    
-    public static WebDriver getCurrentDriver() {
-        return driver.get();
-    }
-    
-    public static void setDriver(WebDriver webDriver) {
-        driver.set(webDriver);
-    }
-}
-```
-
-#### 5. **Strategy Pattern** (Different Testing Environments)
-
-```java
-// src/main/java/utils/appium/enums/Environment.java
-public enum Environment {
-    CLOUD(true),
-    LOCAL(false);
-    
-    private final boolean isCloud;
-    
-    public boolean isCloud() {
-        return isCloud;
-    }
-}
-```
-
-#### 6. **Listener Pattern** (Allure Reporting)
-
-```java
-// src/main/java/utils/listeners/AllureListener.java
-public class AllureListener implements ITestListener {
-    public static <T> T logStep(String stepName, Supplier<T> action) {
-        return Allure.step(stepName, () -> action.get());
+    public ValidatedCrudRequester(RequestSpecification requestSpec, 
+                                 Endpoint endpoint, 
+                                 ResponseSpecification responseSpec) {
+        super(requestSpec, endpoint, responseSpec);
+        this.crudRequester = new CrudRequester(requestSpec, endpoint, responseSpec);
     }
     
     @Override
-    public void onTestFailure(ITestResult result) {
-        attachScreenshot("Screenshot on failure");
+    public T post(BaseModel model) {
+        return (T) crudRequester.post(model)
+                .extract()
+                .as(endpoint.getResponseModel());  // Adapts response to model
     }
 }
 ```
 
-#### 7. **Builder Pattern** (Test Configuration)
+---
+
+#### 6. Decorator
 
 ```java
-// src/main/java/utils/appium/driver/AppFactory.java
-private static UiAutomator2Options createAndroidOptions() {
-    UiAutomator2Options options = new UiAutomator2Options();
-    options.setDeviceName(...)
-           .setPlatformVersion(...)
-           .setAppPackage(...)
-           .setAppActivity(...);
-    return options;
+// src/main/java/web/pages/BasePage.java
+public abstract class BasePage<T extends BasePage<T>> {
+    protected void enterText(SelenideElement element, String text) {
+        Allure.step("Enter text '" + text + "' into field: " + element, () -> {
+            element.clear();
+            element.setValue(text);
+        });
+    }
+    
+    protected void click(SelenideElement element) {
+        Allure.step("Click on element: " + element, () -> {
+            element.shouldBe(Condition.visible).click();
+        });
+    }
 }
 ```
 
-#### 8. **Retry Pattern** (Test Retry Mechanism)
+---
+
+#### 7. Facade
 
 ```java
-// src/main/java/utils/RetryAnalyzer.java
-public class RetryAnalyzer implements IRetryAnalyzer {
-    // Retry logic for failed tests
+// src/main/java/api/specs/RequestSpecs.java
+public class RequestSpecs {
+    private RequestSpecs() {}
+    
+    public static RequestSpecification petStoreSpec() {
+        return defaultRequestBuilder().build();
+    }
+    
+    private static RequestSpecBuilder defaultRequestBuilder() {
+        return new RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
+                .setAccept(ContentType.JSON)
+                .addFilters(List.of(new RequestLoggingFilter(), 
+                                   new ResponseLoggingFilter(), 
+                                   new AllureRestAssured()))
+                .setBaseUri(ProjectConfig.CONFIG.getApiBaseUrl());
+    }
+}
+```
+
+---
+
+### Behavioral Patterns
+
+#### 8. Strategy
+
+```java
+// src/main/java/mobile/driver/AppFactory.java
+private static URI getServerUrl() {
+    String url = Boolean.TRUE.equals(ProjectConfig.CONFIG.getIsCloud())
+            ? ProjectConfig.CONFIG.getBrowserstackHubUrl()  // Cloud strategy
+            : ProjectConfig.CONFIG.getAppiumLocalUrl();     // Local strategy
+    return URI.create(url);
+}
+```
+
+---
+
+#### 9. Iterator
+
+```java
+// src/main/java/web/pages/BasePage.java
+public abstract class BasePage<T extends BasePage<T>> {
+    protected List<String> getAllTexts(ElementsCollection elements) {
+        return elements.texts();  // Iterator pattern via Selenide
+    }
 }
 ```
 
@@ -384,128 +397,13 @@ public class RetryAnalyzer implements IRetryAnalyzer {
 
 ## 🔐 Configuration & Secrets
 
-### 📝 Required Configuration
+### 📝 Configuration File
 
-Create `config.properties` file based on `config.properties.example`:
-
-```properties
-# Platform Configuration
-platform=android
-isCloud=false
-
-# Test Data
-test.credentials.username=bob@example.com
-test.credentials.password=10203040
-
-# Appium Server Configuration
-appium.jsPath=/opt/homebrew/lib/node_modules/appium/build/lib/main.js
-appium.nodePath=/opt/homebrew/bin/node
-appium.port=4723
-appium.localUrl=http://127.0.0.1:4723/
-
-# BrowserStack Configuration
-browserstack.username=YOUR_BROWSERSTACK_USERNAME
-browserstack.accessKey=YOUR_BROWSERSTACK_ACCESS_KEY
-browserstack.appiumVersion=2.4.1
-browserstack.hubUrl=http://hub-cloud.browserstack.com/wd/hub/
-
-# Android Local Configuration
-android.local.deviceName=Pixel 6 Pro API 34
-android.local.platformVersion=14.0
-android.local.appPackage=com.saucelabs.mydemoapp.rn
-android.local.appActivity=.MainActivity
-android.local.app=src/main/resources/apps/AppAndroid.apk
-
-# Android Cloud Configuration
-android.cloud.deviceName=Google Pixel 6 Pro
-android.cloud.platformVersion=13.0
-android.cloud.appPackage=com.saucelabs.mydemoapp.rn
-android.cloud.appActivity=.MainActivity
-android.cloud.app=bs://YOUR_ANDROID_APP_ID
-
-# iOS Local Configuration
-ios.local.deviceName=iPhone 16 Pro
-ios.local.udid=YOUR_DEVICE_UDID
-ios.local.platformVersion=18.6
-ios.local.bundleId=com.saucelabs.mydemoapp.rn
-ios.local.app=src/main/resources/apps/AppiOSRemote.ipa
-
-# iOS Cloud Configuration
-ios.cloud.deviceName=iPhone 16 Pro
-ios.cloud.platformVersion=18.6
-ios.cloud.bundleId=com.saucelabs.mydemoapp.rn
-ios.cloud.app=bs://YOUR_IOS_APP_ID
-
-# API Configuration
-api.baseUrl=https://petstore.swagger.io
-api.version=/v2
-
-# Web Configuration
-web.baseUrl=https://www.saucedemo.com
-web.browser=chrome
-web.browserSize=1920x1080
-web.headless=false
-web.timeout=10000
-web.pageLoadTimeout=30000
-
-# Web Test Data
-web.test.credentials.username=standard_user
-web.test.credentials.password=secret_sauce
-```
+Create `config.properties` file in the project root based on [`config.properties.example`](config.properties.example).
 
 ### 🔑 GitHub Secrets
 
-Configure the following secrets in GitHub (Settings → Secrets and variables → Actions):
-
-| Secret                        | Description                      | Example                          | Required |
-| ----------------------------- | ------------------------------- | -------------------------------- | -------- |
-| **API Configuration**         |                                 |                                  |          |
-| `API_BASE_URL`                | API base URL                    | `https://petstore.swagger.io`    | ✅       |
-| `API_VERSION`                 | API version path                | `/v2`                            | ✅       |
-| **Web Configuration**         |                                 |                                  |          |
-| `WEB_BASE_URL`                | Web application base URL        | `https://www.saucedemo.com`      | ✅       |
-| `WEB_TEST_USERNAME`           | Web test username               | `standard_user`                  | ✅       |
-| `WEB_TEST_PASSWORD`           | Web test password               | `secret_sauce`                   | ✅       |
-| **BrowserStack**              |                                 |                                  |          |
-| `BROWSERSTACK_USERNAME`       | BrowserStack username           | `your_username`                  | ✅       |
-| `BROWSERSTACK_ACCESS_KEY`     | BrowserStack access key         | `your_access_key`                | ✅       |
-| `BROWSERSTACK_APPIUM_VERSION` | Appium version for BrowserStack | `2.4.1`                          | ✅       |
-| **Test Credentials**          |                                 |                                  |          |
-| `TEST_USERNAME`               | Test account username           | `bob@example.com`                | ✅       |
-| `TEST_PASSWORD`               | Test account password           | `10203040`                       | ✅       |
-| **Platform Configuration**    |                                 |                                  |          |
-| `PLATFORM`                    | Default platform (optional)     | `android` or `ios`               | ⚪       |
-| **Android Configuration**     |                                 |                                  |          |
-| `ANDROID_DEVICE_NAME`          | Android device name             | `Google Pixel 6 Pro`             | ✅       |
-| `ANDROID_PLATFORM_VERSION`    | Android platform version        | `13.0`                           | ✅       |
-| `ANDROID_APP_PACKAGE`         | Android app package             | `com.saucelabs.mydemoapp.rn`     | ✅       |
-| `ANDROID_APP_ACTIVITY`        | Android app activity            | `.MainActivity`                  | ✅       |
-| `ANDROID_APP_ID`              | BrowserStack Android app ID     | `bs://your_android_app_id`       | ✅       |
-| **iOS Configuration**         |                                 |                                  |          |
-| `IOS_DEVICE_NAME`             | iOS device name                 | `iPhone 16 Pro`                  | ✅       |
-| `IOS_PLATFORM_VERSION`        | iOS platform version            | `18.6`                           | ✅       |
-| `IOS_BUNDLE_ID`               | iOS bundle identifier           | `com.saucelabs.mydemoapp.rn`     | ✅       |
-| `IOS_APP_ID`                  | BrowserStack iOS app ID         | `bs://your_ios_app_id`           | ✅       |
-| **Telegram Notifications**    |                                 |                                  |          |
-| `TELEGRAM_BOT_TOKEN`          | Telegram bot token              | `123456789:ABC...`               | ⚪       |
-| `TELEGRAM_CHAT_ID`            | Chat ID for notifications       | `-1001234567890`                 | ⚪       |
-
-> **Note:** `GITHUB_TOKEN` is automatically provided by GitHub Actions and doesn't need to be configured manually.
-
-### 🚀 How to Get Secrets
-
-#### BrowserStack
-
-1. Register at [browserstack.com](https://browserstack.com)
-2. Go to Account → Settings
-3. Copy Username and Access Key
-
-#### Telegram Bot
-
-1. Create bot via [@BotFather](https://t.me/botfather)
-2. Get bot token
-3. Add bot to group/channel
-4. Get Chat ID via [@userinfobot](https://t.me/userinfobot)
+Configure secrets in GitHub (Settings → Secrets and variables → Actions) based on [`GITHUB_SECRETS.example`](GITHUB_SECRETS.example).
 
 ---
 
@@ -513,7 +411,7 @@ Configure the following secrets in GitHub (Settings → Secrets and variables �
 
 ### 📋 Prerequisites
 
-- **Java** >= 11
+- **Java** >= 17
 - **Maven** >= 3.6
 - **Node.js** (for Appium)
 - **Appium** >= 2.0
@@ -526,7 +424,7 @@ Configure the following secrets in GitHub (Settings → Secrets and variables �
 ```bash
 # Clone repository
 git clone <repository-url>
-cd java_mobile
+cd <project-directory>
 
 # Copy configuration
 cp config.properties.example config.properties
@@ -543,69 +441,31 @@ mvn clean install
 
 ### 🎯 First Run
 
-#### API Tests
-
 ```bash
-# Run all API tests
+# Run all tests (API / Web / Mobile)
 mvn clean test -Papi
-
-# Run specific API test
-mvn clean test -Papi -Dtest=CreatePetTest
-
-# Run API tests with custom config
-mvn clean test -Papi -Dapi.baseUrl=https://petstore.swagger.io -Dapi.version=/v2
-```
-
-#### Web Tests
-
-```bash
-# Run all web tests
 mvn clean test -Pweb
-
-# Run specific web test
-mvn clean test -Pweb -Dtest=LoginTest
-
-# Run web tests with custom config
-mvn clean test -Pweb -Dweb.baseUrl=https://www.saucedemo.com -Dweb.headless=true
-```
-
-#### Mobile Tests
-
-> **💡 Configuration Note:**  
-> Parameters `platform` and `isCloud` can be passed via command-line flags or configured in `config.properties`.  
-> - **With flags:** flag values override values from `config.properties`  
-> - **Without flags:** values from `config.properties` are used
-
-```bash
-# Run all mobile tests locally (Android) - with flags
-mvn clean test -Pmobile -Dplatform=android -DisCloud=false
-
-# Run all mobile tests locally - without flags (will use values from config.properties)
 mvn clean test -Pmobile
 
-# Run all mobile tests on BrowserStack (Android) - with flags
-mvn clean test -Pmobile -Dplatform=android -DisCloud=true
-```
+# Run specific test
+mvn clean test -Papi -Dtest=CreatePetTest
+mvn clean test -Pweb -Dtest=LoginTest
+mvn clean test -Pmobile -Dtest=LoginTest
 
-#### Generate Reports
-
-```bash
-# Generate Allure report
-mvn allure:serve
-
-# Generate report without opening
-mvn allure:report
+# Run with custom configuration (override config.properties)
+mvn clean test -Papi -Dapi.baseUrl=https://petstore.swagger.io/v2
+mvn clean test -Pweb -Dweb.headless=true -Dweb.credentials.username=standard_user
+mvn clean test -Pmobile -Dmobile.platform=android -Dmobile.isCloud=true
 ```
 
 ---
 
 ### 🔄 Parallel Execution
 
-#### API Tests Parallel Execution
-
-Configure in `api-suite.xml`:
+Configure parallel execution in TestNG suite files (`api-suite.xml`, `web-suite.xml`, `mobile-suite.xml`):
 
 ```xml
+<!-- API Tests -->
 <suite name="API Test Suite" parallel="classes" thread-count="4">
     <test name="API Tests">
         <classes>
@@ -616,13 +476,8 @@ Configure in `api-suite.xml`:
         </classes>
     </test>
 </suite>
-```
 
-#### Web Tests Parallel Execution
-
-Configure in `web-suite.xml`:
-
-```xml
+<!-- Web Tests -->
 <suite name="Web Test Suite" parallel="classes" thread-count="3">
     <test name="Web Tests">
         <classes>
@@ -632,21 +487,15 @@ Configure in `web-suite.xml`:
         </classes>
     </test>
 </suite>
-```
 
-> **💡 Parallel Execution on GitHub Actions:**  
-> Web tests run with 3 parallel threads on GitHub Actions runners (ubuntu-latest with 2 CPU cores, 7GB RAM). Each thread runs a separate Chrome instance in headless mode.
-
-#### Mobile Tests Parallel Execution
-
-Configure in `mobile-suite.xml`:
-
-```xml
+<!-- Mobile Tests -->
 <suite name="Mobile Test Suite" parallel="methods" thread-count="5">
     <test name="Mobile Tests">
         <classes>
             <class name="mobile.LoginTest"/>
+            <class name="mobile.NegativeLoginTest"/>
             <class name="mobile.CartTest"/>
+            <class name="mobile.SortTest"/>
         </classes>
     </test>
 </suite>
@@ -671,18 +520,15 @@ mvn allure:report
 
 # Serve report locally
 mvn allure:serve
-
-# Generate and open report
-mvn allure:report allure:serve
 ```
 
 ### 🔔 Telegram Notifications
 
-Automatic notifications about results via `send-telegram-notification.sh`:
+Automatic notifications about test results via `send-telegram-notification.sh`:
 
-- 🟢 **Success** - all tests passed
-- 🟡 **Partial** - some tests failed
-- 🔴 **Failed** - critical errors
+- 🟢 **Success** - all tests passed (0 failed)
+- 🔴 **Failed** - some tests failed (> 0 failed)
+- 🟡 **No Tests** - no tests executed
 
 ```bash
 # Send notification manually
@@ -697,83 +543,12 @@ Automatic notifications about results via `send-telegram-notification.sh`:
 
 Four workflows available:
 
-#### 1. **All Tests Workflow** (`all-tests.yml`) - Manual Only
-- **Triggers:** Manual only (workflow_dispatch)
-- **Execution:** API Tests → Web Tests → Mobile Tests → Combined Report
-- **Use case:** Full regression testing
+1. **All Tests** (`all-tests.yml`) - Manual only, runs all tests → Combined report
+2. **API Tests** (`api-tests.yml`) - Auto on API changes / Manual (4 parallel classes)
+3. **Web Tests** (`web-tests.yml`) - Auto on Web changes / Manual (3 parallel classes)
+4. **Mobile Tests** (`mobile-tests.yml`) - Auto on Mobile changes / Manual (5 parallel methods, BrowserStack)
 
-#### 2. **API Tests Workflow** (`api-tests.yml`) - Automatic + Manual
-- **Triggers:** Push/PR with changes in `src/main/java/api/**` or `src/test/java/api/**`, Manual
-- **Execution:** API Tests only → Separate Report
-- **Use case:** Quick API validation when API code changes
-
-#### 3. **Web Tests Workflow** (`web-tests.yml`) - Automatic + Manual
-- **Triggers:** Push/PR with changes in `src/main/java/web/**` or `src/test/java/web/**`, Manual
-- **Execution:** Web Tests only (3 parallel threads) → Separate Report
-- **Use case:** Web UI testing when web code changes
-
-#### 4. **Mobile Tests Workflow** (`mobile-tests.yml`) - Automatic + Manual
-- **Triggers:** Push/PR with changes in `src/main/java/mobile/**` or `src/test/java/mobile/**`, Manual
-- **Execution:** Mobile Tests only → Separate Report
-- **Use case:** Platform-specific testing when mobile code changes
-
-### 📋 Workflow Stages
-
-1. **Setup** - install Java and Maven
-2. **Quality Gate** - code quality check with Spotless (blocks test execution if failed)
-3. **API Tests** - execute API tests (if included)
-4. **Web Tests** - execute Web tests with 3 parallel threads (if included)
-5. **Mobile Tests** - execute mobile tests (if included)
-6. **Report** - generate Allure reports
-7. **Notify** - send Telegram notifications
-
-### 🎯 Matrix Testing
-
-```yaml
-strategy:
-  matrix:
-    platform: [android, ios]
-    environment: [cloud, local]
-```
-
-### 📊 Artifacts
-
-- **Allure Reports** - detailed reports
-- **Screenshots** - error screenshots
-- **Logs** - execution logs
-- **Video** - test recordings (BrowserStack)
-
----
-
-## 🎯 Key Benefits
-
-### ✅ **Scalability**
-
-- Modular architecture
-- Easy addition of new tests
-- Multi-platform support (Android/iOS)
-- Parallel execution support
-
-### ✅ **Reliability**
-
-- Automatic retries
-- Detailed logging
-- Error handling
-- Screenshot on failure
-
-### ✅ **Usability**
-
-- Simple API
-- Automatic Allure logging
-- Detailed documentation
-- Clear structure
-
-### ✅ **Integration**
-
-- CI/CD ready
-- Telegram notifications
-- Allure reporting
-- BrowserStack integration
+**All workflows:** Lint Check → Test Execution → Allure Report → GitHub Pages → Telegram Notification
 
 ---
 
@@ -798,9 +573,6 @@ mvn spotless:check
 ```bash
 # Start Appium server
 appium
-
-# Start with specific configuration
-appium server -a 127.0.0.1 -pa /wd/hub --allow-cors
 
 # Stop all Node.js processes (if Appium server hangs)
 killall node
@@ -839,15 +611,24 @@ killall node
 
 All dependencies are managed via Maven in `pom.xml`:
 
-**API Testing:**
+**Stack:**
+- **Java** - Programming language
+- **Maven** - Build tool and dependency management
+- **TestNG** - Test framework
+
+**API:**
 - **REST Assured** - API testing framework
 - **Jackson** - JSON serialization/deserialization
 - **AssertJ** - Fluent assertions
 - **Allure REST Assured** - API request/response logging
 
-**Mobile Testing:**
-- **TestNG** - Test framework
-- **Appium Java Client** - Appium integration
+**Web:**
+- **Selenide** - Web UI automation framework
+- **WebDriverManager** - Automatic WebDriver management
+- **Allure Selenide** - Web test reporting
+
+**Mobile:**
+- **Appium** - Appium integration
 - **Selenium** - WebDriver implementation
 - **BrowserStack SDK** - Cloud testing
 
@@ -856,6 +637,7 @@ All dependencies are managed via Maven in `pom.xml`:
 - **Allure TestNG** - Reporting
 - **AspectJ Weaver** - Allure integration
 - **Lombok** - Boilerplate code reduction
+- **Owner** - Configuration management
 
 ---
 
@@ -867,4 +649,3 @@ All dependencies are managed via Maven in `pom.xml`:
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/polishevskyi/)
 
 </div>
-
