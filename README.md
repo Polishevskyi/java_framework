@@ -510,6 +510,16 @@ Configure parallel execution in TestNG suite files (`api-suite.xml`, `web-suite.
 
 ---
 
+### 🔄 Retry Mechanism
+
+Framework includes retry logic for failed tests. The `RetryAnalyzer` class automatically retries failed tests up to 3 times before marking them as failed.
+
+**Implementation:** [`src/main/java/utils/RetryAnalyzer.java`](src/main/java/utils/RetryAnalyzer.java)
+
+The retry analyzer implements TestNG's `IRetryAnalyzer` interface and can be applied to test methods using the `@Test(retryAnalyzer = RetryAnalyzer.class)` annotation.
+
+---
+
 ## 📊 Reporting
 
 ### 🎨 Allure Reports

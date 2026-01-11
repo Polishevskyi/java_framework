@@ -5,7 +5,7 @@ import org.aeonbits.owner.ConfigFactory;
 
 @Config.Sources("file:config.properties")
 public interface ProjectConfig extends Config {
-    ProjectConfig CONFIG = ConfigFactory.create(ProjectConfig.class);
+    static final ProjectConfig CONFIG = ConfigFactory.create(ProjectConfig.class);
 
     // API Configuration
     @Key("api.baseUrl")
