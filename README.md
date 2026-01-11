@@ -18,23 +18,7 @@
 [![AspectJ](https://img.shields.io/badge/AspectJ-1.9.22-purple.svg)](https://www.eclipse.org/aspectj/)
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.38-pink.svg)](https://projectlombok.org/)
 [![Owner](https://img.shields.io/badge/Owner-1.0.12-lightgrey.svg)](https://owner.aeonbits.org/)
-
----
-
-## 📋 Table of Contents
-
-- [Project Description](#-project-description)
-- [Architecture & Structure](#-architecture--structure)
-- [Technology Stack](#-technology-stack)
-- [Supported Platforms](#-supported-platforms)
-- [Design Patterns](#-design-patterns)
-- [Configuration & Secrets](#-configuration--secrets)
-- [Quick Start](#-quick-start)
-- [Reporting](#-reporting)
-- [CI/CD Integration](#-cicd-integration)
-- [Code Formatting](#-code-formatting)
-- [Appium Setup](#-appium-setup)
-- [Dependencies](#-dependencies)
+[![Spotless](https://img.shields.io/badge/Spotless-2.43.0-purple.svg)](https://github.com/diffplug/spotless)
 
 ---
 
