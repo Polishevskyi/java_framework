@@ -1,21 +1,14 @@
 package mobile;
 
-import mobile.screens.LoginScreen;
-import mobile.screens.MenuScreen;
 import mobile.screens.ProductsScreen;
+import mobile.steps.UserSteps;
 import org.testng.annotations.Test;
 import utils.Constants;
-import utils.ProjectConfig;
 
 public class LoginTest extends BaseMobileTest {
     @Test(description = "Verify that user can login with valid credentials")
     public void validLoginTest() {
-        MenuScreen menuScreen = new ProductsScreen().openMenu();
-        LoginScreen loginScreen = menuScreen.navigateToLogin();
-
-        loginScreen.enterUsername(ProjectConfig.CONFIG.getMobileCredentialsUsername());
-        loginScreen.enterPassword(ProjectConfig.CONFIG.getMobileCredentialsPassword());
-        loginScreen.tapLoginButton();
+        UserSteps.loginUser();
 
         ProductsScreen productsScreen = new ProductsScreen();
         softly.assertThat(productsScreen.getProductsHeaderText())

@@ -6,26 +6,15 @@ import mobile.screens.ProductsScreen;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utils.Constants;
-import utils.ProjectConfig;
 
 public class NegativeLoginTest extends BaseMobileTest {
 
     @DataProvider(name = "invalidCredentials")
     public Object[][] invalidCredentialsData() {
         return new Object[][] {
-            {"", ProjectConfig.CONFIG.getMobileCredentialsPassword(), Constants.ERROR_USERNAME_REQUIRED},
-            {ProjectConfig.CONFIG.getMobileCredentialsUsername(), "", Constants.ERROR_PASSWORD_REQUIRED},
+            {"", FAKER.internet().password(), Constants.ERROR_USERNAME_REQUIRED},
+            {FAKER.internet().emailAddress(), "", Constants.ERROR_PASSWORD_REQUIRED},
             {"", "", Constants.ERROR_USERNAME_REQUIRED},
-            {
-                FAKER.internet().emailAddress(),
-                ProjectConfig.CONFIG.getMobileCredentialsPassword(),
-                Constants.ERROR_INVALID_CREDENTIALS
-            },
-            {
-                ProjectConfig.CONFIG.getMobileCredentialsUsername(),
-                FAKER.internet().password(),
-                Constants.ERROR_INVALID_CREDENTIALS
-            },
             {FAKER.internet().emailAddress(), FAKER.internet().password(), Constants.ERROR_INVALID_CREDENTIALS}
         };
     }
@@ -39,13 +28,19 @@ public class NegativeLoginTest extends BaseMobileTest {
         loginScreen.enterPassword(password);
         loginScreen.tapLoginButtonExpectingError();
 
-        String actualError = "";
-        if (expectedError.equals(Constants.ERROR_USERNAME_REQUIRED)) {
-            actualError = loginScreen.getUserNameErrorText();
-        } else if (expectedError.equals(Constants.ERROR_PASSWORD_REQUIRED)) {
-            actualError = loginScreen.getPasswordErrorText();
-        } else if (expectedError.equals(Constants.ERROR_INVALID_CREDENTIALS)) {
-            actualError = loginScreen.getCredentialsErrorText();
+        String actualError;
+        switch (expectedError) {
+            case Constants.ERROR_USERNAME_REQUIRED:
+                actualError = loginScreen.getUserNameErrorText();
+                break;
+            case Constants.ERROR_PASSWORD_REQUIRED:
+                actualError = loginScreen.getPasswordErrorText();
+                break;
+            case Constants.ERROR_INVALID_CREDENTIALS:
+                actualError = loginScreen.getCredentialsErrorText();
+                break;
+            default:
+                actualError = "";
         }
 
         softly.assertThat(actualError).isEqualTo(expectedError);

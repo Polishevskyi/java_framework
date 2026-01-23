@@ -537,12 +537,35 @@ Automatic notifications about test results via `send-telegram-notification.sh`:
 
 Four workflows available:
 
-1. **All Tests** (`all-tests.yml`) - Manual only, runs all tests → Combined report
-2. **API Tests** (`api-tests.yml`) - Auto on API changes / Manual (4 parallel classes)
-3. **Web Tests** (`web-tests.yml`) - Auto on Web changes / Manual (3 parallel classes)
-4. **Mobile Tests** (`mobile-tests.yml`) - Auto on Mobile changes / Manual (5 parallel methods, BrowserStack)
+1. **All Tests** ([`all-tests.yml`](.github/workflows/all-tests.yml))
+   - **Trigger:** Manual only (`workflow_dispatch`)
+   - **Jobs:** Lint → API Tests + Web Tests + Mobile Tests → Combined Report
+   - **Features:** Platform selection (Android/iOS), combined Allure report
 
-**All workflows:** Lint Check → Test Execution → Allure Report → GitHub Pages → Telegram Notification
+2. **API Tests** ([`api-tests.yml`](.github/workflows/api-tests.yml))
+   - **Trigger:** Push/PR to API files, manual
+   - **Jobs:** Lint → API Tests → Allure Report → Telegram
+   - **Parallel:** 4 test classes
+
+3. **Web Tests** ([`web-tests.yml`](.github/workflows/web-tests.yml))
+   - **Trigger:** Push/PR to Web files, manual
+   - **Jobs:** Lint → Web Tests → Allure Report → Telegram
+   - **Parallel:** 3 test classes
+
+4. **Mobile Tests** ([`mobile-tests.yml`](.github/workflows/mobile-tests.yml))
+   - **Trigger:** Push/PR to Mobile files, manual
+   - **Jobs:** Lint → Mobile Tests (BrowserStack) → Allure Report → Telegram
+   - **Parallel:** 5 test methods on BrowserStack
+   - **Features:** Platform selection (Android/iOS)
+
+**All workflows include:**
+
+- ✅ Code quality checks (Spotless)
+- ✅ Test execution with retries
+- ✅ Allure report generation
+- ✅ GitHub Pages deployment
+- ✅ Telegram notifications
+- ✅ Artifacts upload (test results, screenshots)
 
 ---
 
@@ -565,12 +588,38 @@ mvn spotless:check
 ### Local Appium Server
 
 ```bash
+# Install Appium globally
+npm install -g appium
+
+# Install drivers
+appium driver install uiautomator2  # Android
+appium driver install xcuitest      # iOS
+
 # Start Appium server
 appium
 
-# Stop all Node.js processes (if Appium server hangs)
+# Stop Appium server (if needed)
 killall node
 ```
+
+### BrowserStack Setup
+
+1. Create account: https://www.browserstack.com/
+2. Upload apps:
+
+   ```bash
+   # Upload Android app
+   curl -u "USERNAME:ACCESS_KEY" \
+     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
+     -F "file=@/path/to/app.apk"
+
+   # Upload iOS app
+   curl -u "USERNAME:ACCESS_KEY" \
+     -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
+     -F "file=@/path/to/app.ipa"
+   ```
+
+3. Copy app IDs (bs://...) to `config.properties`
 
 ### Appium Inspector Configuration
 

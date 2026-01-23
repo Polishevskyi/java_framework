@@ -33,7 +33,7 @@ public class AppFactory {
         synchronized (AppFactory.class) {
             if (suiteBuildName == null) {
                 String platform = ProjectConfig.CONFIG.getPlatform();
-                String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+                String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
                 suiteBuildName = platform + " - " + date;
             }
             return suiteBuildName;

@@ -47,8 +47,8 @@ android.local.appPackage=com.saucelabs.mydemoapp.rn
 android.local.appActivity=.MainActivity
 
 # Cloud Android Settings
-android.cloud.deviceName=Google Pixel 6 Pro
-android.cloud.platformVersion=13.0
+android.cloud.deviceName=Google Pixel 6
+android.cloud.platformVersion=12.0
 android.cloud.appPackage=com.saucelabs.mydemoapp.rn
 android.cloud.appActivity=.MainActivity
 browserstack.android.app=bs://YOUR_ANDROID_APP_ID 🔴
