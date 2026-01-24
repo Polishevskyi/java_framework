@@ -71,7 +71,8 @@ RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/send
   -d "{
     \"chat_id\": \"$TELEGRAM_CHAT_ID\",
     \"text\": \"$MESSAGE\",
-    \"parse_mode\": \"HTML\"
+    \"parse_mode\": \"HTML\",
+    \"disable_web_page_preview\": false
   }")
 
 # Check if message was sent successfully
