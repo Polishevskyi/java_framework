@@ -35,8 +35,8 @@ public class ValidatedCrudRequester<T extends BaseModel> extends BaseRequest imp
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Object delete(long id) {
-        return (T) crudRequester.delete(id).extract().as(endpoint.getResponseModel());
+        crudRequester.delete(id);
+        return null;
     }
 }

@@ -17,6 +17,9 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   lint-and-format:
     name: Code Quality Check
@@ -174,8 +177,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ api-tests, web-tests, mobile-tests ]
     if: always()
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout code
