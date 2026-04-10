@@ -10,6 +10,7 @@ import java.util.*;
 public final class DataGenerator {
 
     private static final Faker FAKER = new Faker();
+    private static final List<String> PET_STATUSES = List.of("available", "pending", "sold");
 
     private DataGenerator() {}
 
@@ -50,7 +51,6 @@ public final class DataGenerator {
     }
 
     private static String generateRandomPetStatus() {
-        List<String> statuses = List.of("available", "pending", "sold");
-        return statuses.get(FAKER.number().numberBetween(0, statuses.size()));
+        return PET_STATUSES.get(FAKER.number().numberBetween(0, PET_STATUSES.size()));
     }
 }

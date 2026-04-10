@@ -28,9 +28,9 @@ public class BaseWebTest {
 
     @BeforeClass
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        Configuration.baseUrl = ProjectConfig.CONFIG.getWebBaseUrl();
         Configuration.browser = ProjectConfig.CONFIG.getWebBrowser();
+        WebDriverManager.getInstance(Configuration.browser).setup();
+        Configuration.baseUrl = ProjectConfig.CONFIG.getWebBaseUrl();
         Configuration.browserSize = ProjectConfig.CONFIG.getWebBrowserSize();
         Configuration.headless = ProjectConfig.CONFIG.getWebHeadless();
 

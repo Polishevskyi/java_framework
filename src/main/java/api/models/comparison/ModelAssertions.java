@@ -4,6 +4,9 @@ import org.assertj.core.api.AbstractAssert;
 
 public class ModelAssertions extends AbstractAssert<ModelAssertions, Object> {
 
+    private static final ModelComparisonConfigLoader CONFIG_LOADER =
+            new ModelComparisonConfigLoader("api/model-mapping.properties");
+
     private final Object request;
     private final Object response;
 
@@ -18,8 +21,7 @@ public class ModelAssertions extends AbstractAssert<ModelAssertions, Object> {
     }
 
     public ModelAssertions match() {
-        ModelComparisonConfigLoader configLoader = new ModelComparisonConfigLoader("api/model-mapping.properties");
-        ModelComparisonConfigLoader.ComparisonRule rule = configLoader.getRuleFor(request.getClass());
+        ModelComparisonConfigLoader.ComparisonRule rule = CONFIG_LOADER.getRuleFor(request.getClass());
 
         if (rule != null) {
             ModelComparator.ComparisonResult result =

@@ -5,13 +5,14 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import mobile.driver.AppDriver;
 import org.openqa.selenium.By;
+import utils.Constants;
 
 public class ProductsScreen extends BaseScreen {
     private final By sortBtn = AppiumBy.accessibilityId("sort button");
-    private final By nameAscendingOpt = AppiumBy.accessibilityId("nameAsc");
-    private final By nameDescendingOpt = AppiumBy.accessibilityId("nameDesc");
-    private final By priceAscendingOpt = AppiumBy.accessibilityId("priceAsc");
-    private final By priceDescendingOpt = AppiumBy.accessibilityId("priceDesc");
+    private final By nameAscendingOpt = AppiumBy.accessibilityId(Constants.SORT_NAME_ASC);
+    private final By nameDescendingOpt = AppiumBy.accessibilityId(Constants.SORT_NAME_DESC);
+    private final By priceAscendingOpt = AppiumBy.accessibilityId(Constants.SORT_PRICE_ASC);
+    private final By priceDescendingOpt = AppiumBy.accessibilityId(Constants.SORT_PRICE_DESC);
     private final By addToCartBtn = AppiumBy.accessibilityId("Add To Cart button");
 
     private By openMenuBtn;

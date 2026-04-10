@@ -45,10 +45,6 @@ public class LoginScreen extends BaseScreen {
         tap(loginBtn);
     }
 
-    public void tapLoginButtonExpectingError() {
-        tap(loginBtn);
-    }
-
     public String getUserNameErrorText() {
         return getText(userNameErrorText);
     }

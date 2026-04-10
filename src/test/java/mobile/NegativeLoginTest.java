@@ -26,7 +26,7 @@ public class NegativeLoginTest extends BaseMobileTest {
 
         loginScreen.enterUsername(username);
         loginScreen.enterPassword(password);
-        loginScreen.tapLoginButtonExpectingError();
+        loginScreen.tapLoginButton();
 
         String actualError;
         switch (expectedError) {
@@ -40,7 +40,7 @@ public class NegativeLoginTest extends BaseMobileTest {
                 actualError = loginScreen.getCredentialsErrorText();
                 break;
             default:
-                actualError = "";
+                throw new IllegalArgumentException("Unknown error type: " + expectedError);
         }
 
         softly.assertThat(actualError).isEqualTo(expectedError);

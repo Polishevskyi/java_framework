@@ -31,12 +31,12 @@ public class ValidatedCrudRequester<T extends BaseModel> extends BaseRequest imp
     @Override
     @SuppressWarnings("unchecked")
     public Object put(BaseModel model) {
-        return (T) crudRequester.post(model).extract().as(endpoint.getResponseModel());
+        return (T) crudRequester.put(model).extract().as(endpoint.getResponseModel());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Object delete(long id) {
-        return (T) crudRequester.get(id).extract().as(endpoint.getResponseModel());
+        return (T) crudRequester.delete(id).extract().as(endpoint.getResponseModel());
     }
 }

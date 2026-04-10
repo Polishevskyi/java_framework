@@ -10,10 +10,10 @@ public class SortTest extends BaseMobileTest {
     @DataProvider(name = "sortOptions")
     public Object[][] sortOptionsData() {
         return new Object[][] {
-            {"nameAsc", Constants.PRODUCT_BACKPACK},
-            {"nameDesc", Constants.PRODUCT_TSHIRT},
-            {"priceAsc", Constants.PRODUCT_ONESIE},
-            {"priceDesc", Constants.PRODUCT_JACKET}
+            {Constants.SORT_NAME_ASC, Constants.PRODUCT_BACKPACK},
+            {Constants.SORT_NAME_DESC, Constants.PRODUCT_TSHIRT},
+            {Constants.SORT_PRICE_ASC, Constants.PRODUCT_ONESIE},
+            {Constants.SORT_PRICE_DESC, Constants.PRODUCT_JACKET}
         };
     }
 
@@ -24,18 +24,20 @@ public class SortTest extends BaseMobileTest {
         productsScreen.tapSortButton();
 
         switch (sortType) {
-            case "nameAsc":
+            case Constants.SORT_NAME_ASC:
                 productsScreen.selectNameAscending();
                 break;
-            case "nameDesc":
+            case Constants.SORT_NAME_DESC:
                 productsScreen.selectNameDescending();
                 break;
-            case "priceAsc":
+            case Constants.SORT_PRICE_ASC:
                 productsScreen.selectPriceAscending();
                 break;
-            case "priceDesc":
+            case Constants.SORT_PRICE_DESC:
                 productsScreen.selectPriceDescending();
                 break;
+            default:
+                throw new IllegalArgumentException("Unknown sort type: " + sortType);
         }
 
         String actualProductName = productsScreen.getFirstProductName();

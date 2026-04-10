@@ -27,9 +27,9 @@ public class BaseScreen {
 
     protected void enterText(By locator, String text) {
         Allure.step("Enter text '" + text + "' into field: " + formatLocator(locator), () -> {
-            waitUntilElementPresent(locator);
-            findElement(locator).clear();
-            findElement(locator).sendKeys(text);
+            WebElement element = waitUntilElementPresent(locator);
+            element.clear();
+            element.sendKeys(text);
         });
     }
 

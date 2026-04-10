@@ -31,6 +31,12 @@ public final class Constants {
     public static final String PRODUCT_ONESIE = "Sauce Labs Onesie";
     public static final String PRODUCT_TSHIRT = "Test.allTheThings() T-Shirt";
 
+    // Sort Options
+    public static final String SORT_NAME_ASC = "nameAsc";
+    public static final String SORT_NAME_DESC = "nameDesc";
+    public static final String SORT_PRICE_ASC = "priceAsc";
+    public static final String SORT_PRICE_DESC = "priceDesc";
+
     // ==================== Web Constants ====================
     // Assertion Messages
     public static final String ASSERT_LOGIN_PAGE_AFTER_LOGOUT = "Login page should be displayed after logout";

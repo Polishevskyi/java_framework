@@ -32,9 +32,7 @@ public class CrudRequester extends BaseRequest implements RequestInterface {
     @Override
     @Step("GET request to {endpoint} with id {id}")
     public ValidatableResponse get(long id) {
-        String url =
-                endpoint.getUrl().replace("{accountId}", String.valueOf(id)).replace("{petId}", String.valueOf(id));
-        return given().spec(requestSpecification).get(url).then().assertThat().spec(responseSpecification);
+        return given().spec(requestSpecification).get(resolveUrl(id)).then().assertThat().spec(responseSpecification);
     }
 
     @Step("GET request to {endpoint}")
@@ -60,12 +58,16 @@ public class CrudRequester extends BaseRequest implements RequestInterface {
     @Override
     @Step("DELETE request for {endpoint} with id {id}")
     public ValidatableResponse delete(long id) {
-        String url =
-                endpoint.getUrl().replace("{accountId}", String.valueOf(id)).replace("{petId}", String.valueOf(id));
         return given().spec(requestSpecification)
-                .delete(url)
+                .delete(resolveUrl(id))
                 .then()
                 .assertThat()
                 .spec(responseSpecification);
+    }
+
+    private String resolveUrl(long id) {
+        return endpoint.getUrl()
+                .replace("{accountId}", String.valueOf(id))
+                .replace("{petId}", String.valueOf(id));
     }
 }
