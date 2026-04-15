@@ -9,11 +9,11 @@ import lombok.Getter;
 public enum Endpoint {
     CREATE_BOOKING("/booking", BookingRequestModel.class, BookingCreateResponseModel.class),
 
-    GET_BOOKING("/booking/{bookingId}", BaseModel.class, BookingRequestModel.class),
+    GET_BOOKING("/booking/{id}", BaseModel.class, BookingRequestModel.class),
 
-    UPDATE_BOOKING("/booking/{bookingId}", BookingRequestModel.class, BookingRequestModel.class),
+    UPDATE_BOOKING("/booking/{id}", BookingRequestModel.class, BookingRequestModel.class),
 
-    DELETE_BOOKING("/booking/{bookingId}", BaseModel.class, BaseModel.class);
+    DELETE_BOOKING("/booking/{id}", BaseModel.class, BaseModel.class);
 
     private final String url;
     private final Class<? extends BaseModel> requestModel;

@@ -70,6 +70,6 @@ public class CrudRequester extends BaseRequest implements RequestInterface {
     }
 
     private String resolveUrl(long id) {
-        return endpoint.getUrl().replace("{bookingId}", String.valueOf(id));
+        return endpoint.getUrl().replace("{id}", String.valueOf(id));
     }
 }
