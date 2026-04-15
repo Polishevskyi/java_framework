@@ -20,11 +20,13 @@ public class BookingSteps {
 
     public static BookingResponse createBooking(BookingRequestModel bookingData) {
         BookingRequestModel requestData = bookingData != null ? bookingData : DataGenerator.generateBooking();
-        return Allure.step("Create booking for: " + requestData.getFirstname() + " " + requestData.getLastname(), () -> {
-            BookingCreateResponseModel responseData =
-                    (BookingCreateResponseModel) createRequester(Endpoint.CREATE_BOOKING).post(requestData);
-            return new BookingResponse(requestData, responseData.getBooking(), responseData.getBookingid(), HttpStatus.SC_OK);
-        });
+        return Allure.step(
+                "Create booking for: " + requestData.getFirstname() + " " + requestData.getLastname(), () -> {
+                    BookingCreateResponseModel responseData = (BookingCreateResponseModel)
+                            createRequester(Endpoint.CREATE_BOOKING).post(requestData);
+                    return new BookingResponse(
+                            requestData, responseData.getBooking(), responseData.getBookingid(), HttpStatus.SC_OK);
+                });
     }
 
     public static BookingResponse getBookingById(Long bookingId) {
@@ -37,8 +39,8 @@ public class BookingSteps {
 
     public static BookingResponse updateBooking(Long bookingId, BookingRequestModel bookingData) {
         return Allure.step("Update booking with ID: " + bookingId, () -> {
-            BookingRequestModel responseData =
-                    (BookingRequestModel) createAuthRequester(Endpoint.UPDATE_BOOKING).put(bookingId, bookingData);
+            BookingRequestModel responseData = (BookingRequestModel)
+                    createAuthRequester(Endpoint.UPDATE_BOOKING).put(bookingId, bookingData);
             return new BookingResponse(bookingData, responseData, bookingId, HttpStatus.SC_OK);
         });
     }
@@ -51,8 +53,7 @@ public class BookingSteps {
     }
 
     private static ValidatedCrudRequester<BookingCreateResponseModel> createRequester(Endpoint endpoint) {
-        return new ValidatedCrudRequester<>(
-                RequestSpecs.bookingSpec(), endpoint, ResponseSpecs.requestReturnsOKSpec());
+        return new ValidatedCrudRequester<>(RequestSpecs.bookingSpec(), endpoint, ResponseSpecs.requestReturnsOKSpec());
     }
 
     private static ValidatedCrudRequester<BookingRequestModel> createAuthRequester(Endpoint endpoint) {

@@ -15,8 +15,7 @@ public class AuthService {
         if (token == null) {
             synchronized (AuthService.class) {
                 if (token == null) {
-                    token = given()
-                            .contentType(ContentType.JSON)
+                    token = given().contentType(ContentType.JSON)
                             .accept("application/json")
                             .baseUri(ProjectConfig.CONFIG.getApiBaseUrl())
                             .body(Map.of(

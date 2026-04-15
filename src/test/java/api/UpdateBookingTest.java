@@ -15,18 +15,15 @@ public class UpdateBookingTest extends BaseApiTest {
     public void verifyBookingCanBeUpdatedSuccessfully() {
         BookingSteps.BookingResponse createdBooking = BookingSteps.createBooking();
 
-        BookingRequestModel updatedBookingData =
-                DataGenerator.generateBookingUpdate(createdBooking.getResponseData());
+        BookingRequestModel updatedBookingData = DataGenerator.generateBookingUpdate(createdBooking.getResponseData());
         BookingSteps.BookingResponse updatedBooking =
                 BookingSteps.updateBooking(createdBooking.getBookingId(), updatedBookingData);
 
         assertThat(updatedBooking.getStatus()).isEqualTo(HttpStatus.SC_OK);
 
         softly.assertThat(updatedBooking.getResponseData()).isNotNull();
-        softly.assertThat(updatedBooking.getResponseData().getFirstname())
-                .isEqualTo(updatedBookingData.getFirstname());
-        softly.assertThat(updatedBooking.getResponseData().getLastname())
-                .isEqualTo(updatedBookingData.getLastname());
+        softly.assertThat(updatedBooking.getResponseData().getFirstname()).isEqualTo(updatedBookingData.getFirstname());
+        softly.assertThat(updatedBooking.getResponseData().getLastname()).isEqualTo(updatedBookingData.getLastname());
         softly.assertThat(updatedBooking.getResponseData().getTotalprice())
                 .isEqualTo(updatedBookingData.getTotalprice());
 
