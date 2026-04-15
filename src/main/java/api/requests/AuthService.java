@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 
 import io.restassured.http.ContentType;
 import java.util.Map;
+import org.apache.http.HttpStatus;
 import utils.ProjectConfig;
 
 public class AuthService {
@@ -23,7 +24,7 @@ public class AuthService {
                                     "password", ProjectConfig.CONFIG.getApiCredentialsPassword()))
                             .post("/auth")
                             .then()
-                            .statusCode(200)
+                            .statusCode(HttpStatus.SC_OK)
                             .extract()
                             .path("token");
                 }
