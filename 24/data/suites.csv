@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","782","Verify that booking can be deleted successfully by ID","API Test Suite","Wed Apr 15 14:01:36 UTC 2026","passed","Wed Apr 15 14:01:37 UTC 2026","api.DeleteBookingTest","API Tests","api.DeleteBookingTest","verifyBookingCanBeDeletedSuccessfully"
+"","774","Verify that booking can be retrieved successfully by ID","API Test Suite","Wed Apr 15 14:01:33 UTC 2026","passed","Wed Apr 15 14:01:34 UTC 2026","api.GetBookingTest","API Tests","api.GetBookingTest","verifyBookingCanBeRetrievedById"
+"","2034","Verify that booking can be updated successfully with new data","API Test Suite","Wed Apr 15 14:01:34 UTC 2026","passed","Wed Apr 15 14:01:36 UTC 2026","api.UpdateBookingTest","API Tests","api.UpdateBookingTest","verifyBookingCanBeUpdatedSuccessfully"
+"","4596","Verify that booking can be created successfully with valid data","API Test Suite","Wed Apr 15 14:01:29 UTC 2026","passed","Wed Apr 15 14:01:33 UTC 2026","api.CreateBookingTest","API Tests","api.CreateBookingTest","verifyBookingCanBeCreatedSuccessfully"
