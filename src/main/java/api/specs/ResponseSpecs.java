@@ -7,11 +7,11 @@ import org.apache.http.HttpStatus;
 public class ResponseSpecs {
     private ResponseSpecs() {}
 
-    private static ResponseSpecBuilder defaultResponseBuilder() {
-        return new ResponseSpecBuilder();
+    public static ResponseSpecification requestReturnsOKSpec() {
+        return new ResponseSpecBuilder().expectStatusCode(HttpStatus.SC_OK).build();
     }
 
-    public static ResponseSpecification requestReturnsOKSpec() {
-        return defaultResponseBuilder().expectStatusCode(HttpStatus.SC_OK).build();
+    public static ResponseSpecification requestReturnsCreatedSpec() {
+        return new ResponseSpecBuilder().expectStatusCode(HttpStatus.SC_CREATED).build();
     }
 }

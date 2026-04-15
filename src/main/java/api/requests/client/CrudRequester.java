@@ -49,11 +49,11 @@ public class CrudRequester extends BaseRequest implements RequestInterface {
     }
 
     @Override
-    @Step("PUT request to {endpoint} with body {model}")
-    public ValidatableResponse put(BaseModel model) {
+    @Step("PUT request to {endpoint} with id {id} and body {model}")
+    public ValidatableResponse put(long id, BaseModel model) {
         return given().spec(requestSpecification)
                 .body(model)
-                .put(endpoint.getUrl())
+                .put(resolveUrl(id))
                 .then()
                 .assertThat()
                 .spec(responseSpecification);
@@ -70,6 +70,6 @@ public class CrudRequester extends BaseRequest implements RequestInterface {
     }
 
     private String resolveUrl(long id) {
-        return endpoint.getUrl().replace("{accountId}", String.valueOf(id)).replace("{petId}", String.valueOf(id));
+        return endpoint.getUrl().replace("{bookingId}", String.valueOf(id));
     }
 }

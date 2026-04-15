@@ -7,13 +7,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Endpoint {
-    CREATE_PET("/pet", PetRequestModel.class, PetResponseModel.class),
+    CREATE_BOOKING("/booking", BookingRequestModel.class, BookingCreateResponseModel.class),
 
-    GET_PET("/pet/{petId}", BaseModel.class, PetResponseModel.class),
+    GET_BOOKING("/booking/{bookingId}", BaseModel.class, BookingRequestModel.class),
 
-    UPDATE_PET("/pet", PetRequestModel.class, PetResponseModel.class),
+    UPDATE_BOOKING("/booking/{bookingId}", BookingRequestModel.class, BookingRequestModel.class),
 
-    DELETE_PET("/pet/{petId}", BaseModel.class, PetResponseModel.class);
+    DELETE_BOOKING("/booking/{bookingId}", BaseModel.class, BaseModel.class);
 
     private final String url;
     private final Class<? extends BaseModel> requestModel;

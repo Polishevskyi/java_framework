@@ -26,7 +26,7 @@
 
 Comprehensive test automation framework for **API**, **Web**, and **Mobile** testing with:
 
-- **API Testing** - REST Assured with PetStore API (Swagger)
+- **API Testing** - REST Assured with Restful Booker API
 - **Web Testing** - Selenide with SauceDemo application
 - **Mobile Testing** - Appium with BrowserStack cloud and local execution (Android/iOS)
 - **Reporting** - Allure Reports with GitHub Pages deployment
@@ -50,10 +50,9 @@ java_mobile/
 │   │   │   ├── 📁 api/                  # API Testing
 │   │   │   │   ├── 📁 models/           # Request/Response models
 │   │   │   │   │   ├── BaseModel.java
-│   │   │   │   │   ├── PetRequestModel.java
-│   │   │   │   │   ├── PetResponseModel.java
-│   │   │   │   │   ├── PetCategoryModel.java
-│   │   │   │   │   ├── PetTagModel.java
+│   │   │   │   │   ├── BookingRequestModel.java
+│   │   │   │   │   ├── BookingCreateResponseModel.java
+│   │   │   │   │   ├── BookingDatesModel.java
 │   │   │   │   │   └── 📁 comparison/   # Model comparison logic
 │   │   │   │   │       ├── ModelComparator.java
 │   │   │   │   │       ├── ModelAssertions.java
@@ -67,9 +66,10 @@ java_mobile/
 │   │   │   │   │       └── ValidatedCrudRequester.java
 │   │   │   │   ├── 📁 specs/            # Request/Response specifications
 │   │   │   │   │   ├── RequestSpecs.java
-│   │   │   │   │   └── ResponseSpecs.java
+│   │   │   │   │   ├── ResponseSpecs.java
+│   │   │   │   │   └── AuthToken.java
 │   │   │   │   └── 📁 steps/            # Step definitions
-│   │   │   │       └── PetSteps.java
+│   │   │   │       └── BookingSteps.java
 │   │   │   ├── 📁 mobile/               # Mobile Testing
 │   │   │   │   ├── 📁 driver/           # Driver management
 │   │   │   │   │   ├── AppDriver.java
@@ -108,10 +108,10 @@ java_mobile/
 │       ├── 📁 java/
 │       │   ├── 📁 api/
 │       │   │   ├── BaseApiTest.java                 # Base API test class
-│       │   │   ├── CreatePetTest.java               # Create pet tests
-│       │   │   ├── GetPetTest.java                  # Get pet tests
-│       │   │   ├── UpdatePetTest.java               # Update pet tests
-│       │   │   └── DeletePetTest.java               # Delete pet tests
+│       │   │   ├── CreateBookingTest.java           # Create booking tests
+│       │   │   ├── GetBookingTest.java              # Get booking tests
+│       │   │   ├── UpdateBookingTest.java           # Update booking tests
+│       │   │   └── DeleteBookingTest.java           # Delete booking tests
 │       │   ├── 📁 mobile/
 │       │   │   ├── BaseMobileTest.java              # Base mobile test class
 │       │   │   ├── LoginTest.java                   # Login tests
@@ -171,8 +171,8 @@ java_mobile/
 
 ## 🌐 Supported Platforms
 
-**Mobile:** Android 13.0+ / iOS 18.6+ (Local & BrowserStack Cloud)  
-**API:** PetStore API (Swagger) - https://petstore.swagger.io/v2 (REST/JSON)  
+**Mobile:** Android 13.0+ / iOS 18.6+ (Local & BrowserStack Cloud)
+**API:** Restful Booker API - https://restful-booker.herokuapp.com (REST/JSON)
 **Web:** Chrome, Firefox, Edge, Safari (Windows, macOS, Linux) - SauceDemo - https://www.saucedemo.com
 
 ---
@@ -252,24 +252,29 @@ public class AppFactory {
 #### 4. Builder
 
 ```java
-// src/main/java/api/models/PetRequestModel.java
+// src/main/java/api/models/BookingRequestModel.java
 @Data
-@Builder
-public class PetRequestModel extends BaseModel {
-    private Long id;
-    private String name;
-    private String status;
-    private PetCategoryModel category;
-    private List<PetTagModel> tags;
+@Builder(toBuilder = true)
+public class BookingRequestModel extends BaseModel {
+    private String firstname;
+    private String lastname;
+    private Integer totalprice;
+    private Boolean depositpaid;
+    private BookingDatesModel bookingdates;
+    private String additionalneeds;
 }
 
 // Usage:
-PetRequestModel pet = PetRequestModel.builder()
-        .id(1L)
-        .name("Fluffy")
-        .status("available")
-        .category(category)
-        .tags(tags)
+BookingRequestModel booking = BookingRequestModel.builder()
+        .firstname("Jim")
+        .lastname("Brown")
+        .totalprice(111)
+        .depositpaid(true)
+        .bookingdates(BookingDatesModel.builder()
+                .checkin("2026-05-01")
+                .checkout("2026-05-10")
+                .build())
+        .additionalneeds("Breakfast")
         .build();
 ```
 
@@ -331,17 +336,23 @@ public abstract class BasePage<T extends BasePage<T>> {
 // src/main/java/api/specs/RequestSpecs.java
 public class RequestSpecs {
     private RequestSpecs() {}
-    
-    public static RequestSpecification petStoreSpec() {
+
+    public static RequestSpecification bookingSpec() {
         return defaultRequestBuilder().build();
     }
-    
+
+    public static RequestSpecification authenticatedBookingSpec() {
+        return defaultRequestBuilder()
+                .addCookie("token", AuthToken.get())
+                .build();
+    }
+
     private static RequestSpecBuilder defaultRequestBuilder() {
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
-                .addFilters(List.of(new RequestLoggingFilter(), 
-                                   new ResponseLoggingFilter(), 
+                .setAccept("application/json")
+                .addFilters(List.of(new RequestLoggingFilter(),
+                                   new ResponseLoggingFilter(),
                                    new AllureRestAssured()))
                 .setBaseUri(ProjectConfig.CONFIG.getApiBaseUrl());
     }
@@ -432,12 +443,12 @@ mvn clean test -Pweb
 mvn clean test -Pmobile
 
 # Run specific test
-mvn clean test -Papi -Dtest=CreatePetTest
+mvn clean test -Papi -Dtest=CreateBookingTest
 mvn clean test -Pweb -Dtest=LoginTest
 mvn clean test -Pmobile -Dtest=LoginTest
 
 # Run with custom configuration (override config.properties)
-mvn clean test -Papi -Dapi.baseUrl=https://petstore.swagger.io/v2
+mvn clean test -Papi -Dapi.baseUrl=https://restful-booker.herokuapp.com
 mvn clean test -Pweb -Dweb.headless=true -Dweb.credentials.username=standard_user
 mvn clean test -Pmobile -Dmobile.platform=android -Dmobile.isCloud=true
 ```
@@ -450,13 +461,13 @@ Configure parallel execution in TestNG suite files (`api-suite.xml`, `web-suite.
 
 ```xml
 <!-- API Tests -->
-<suite name="API Test Suite" parallel="classes" thread-count="4">
+<suite name="API Test Suite" parallel="false">
     <test name="API Tests">
         <classes>
-            <class name="api.CreatePetTest"/>
-            <class name="api.GetPetTest"/>
-            <class name="api.UpdatePetTest"/>
-            <class name="api.DeletePetTest"/>
+            <class name="api.CreateBookingTest"/>
+            <class name="api.GetBookingTest"/>
+            <class name="api.UpdateBookingTest"/>
+            <class name="api.DeleteBookingTest"/>
         </classes>
     </test>
 </suite>
@@ -545,7 +556,7 @@ Four workflows available:
 2. **API Tests** ([`api-tests.yml`](.github/workflows/api-tests.yml))
    - **Trigger:** Push/PR to API files, manual
    - **Jobs:** Lint → API Tests → Allure Report → Telegram
-   - **Parallel:** 4 test classes
+   - **Sequential:** 4 test classes (Restful Booker rate limiting)
 
 3. **Web Tests** ([`web-tests.yml`](.github/workflows/web-tests.yml))
    - **Trigger:** Push/PR to Web files, manual

@@ -1,7 +1,9 @@
 # ============================================================================
 # API TESTS CONFIGURATION
 # ============================================================================
-api.baseUrl=https://petstore.swagger.io/v2
+api.baseUrl=https://restful-booker.herokuapp.com
+api.credentials.username=admin
+api.credentials.password=password123
 
 # ============================================================================
 # WEB TESTS CONFIGURATION

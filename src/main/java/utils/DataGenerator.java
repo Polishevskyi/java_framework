@@ -1,56 +1,40 @@
 package utils;
 
-import api.models.PetCategoryModel;
-import api.models.PetRequestModel;
-import api.models.PetResponseModel;
-import api.models.PetTagModel;
+import api.models.BookingDatesModel;
+import api.models.BookingRequestModel;
 import com.github.javafaker.Faker;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public final class DataGenerator {
 
     private static final Faker FAKER = new Faker();
-    private static final List<String> PET_STATUSES = List.of("available", "pending", "sold");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private DataGenerator() {}
 
-    public static PetRequestModel generatePet() {
-        return PetRequestModel.builder()
-                .id(FAKER.number().numberBetween(1L, 999_999L))
-                .name(FAKER.animal().name())
-                .category(generateCategory())
-                .photoUrls(List.of(FAKER.internet().image()))
-                .tags(List.of(generateTag()))
-                .status(generateRandomPetStatus())
+    public static BookingRequestModel generateBooking() {
+        LocalDate checkin = LocalDate.now().plusDays(FAKER.number().numberBetween(1, 30));
+        LocalDate checkout = checkin.plusDays(FAKER.number().numberBetween(1, 14));
+
+        return BookingRequestModel.builder()
+                .firstname(FAKER.name().firstName())
+                .lastname(FAKER.name().lastName())
+                .totalprice(FAKER.number().numberBetween(50, 500))
+                .depositpaid(FAKER.bool().bool())
+                .bookingdates(BookingDatesModel.builder()
+                        .checkin(checkin.format(DATE_FORMAT))
+                        .checkout(checkout.format(DATE_FORMAT))
+                        .build())
+                .additionalneeds(FAKER.options().option("Breakfast", "Lunch", "Dinner", "Airport Transfer"))
                 .build();
     }
 
-    public static PetRequestModel generatePetUpdateData(PetResponseModel existingPet) {
-        return PetRequestModel.builder()
-                .id(existingPet.getId())
-                .name(FAKER.animal().name())
-                .category(existingPet.getCategory())
-                .photoUrls(existingPet.getPhotoUrls())
-                .tags(existingPet.getTags())
-                .status(generateRandomPetStatus())
+    public static BookingRequestModel generateBookingUpdate(BookingRequestModel existing) {
+        return existing.toBuilder()
+                .firstname(FAKER.name().firstName())
+                .lastname(FAKER.name().lastName())
+                .totalprice(FAKER.number().numberBetween(50, 500))
                 .build();
-    }
-
-    private static PetCategoryModel generateCategory() {
-        return PetCategoryModel.builder()
-                .id(FAKER.number().numberBetween(1L, 100L))
-                .name(FAKER.animal().name())
-                .build();
-    }
-
-    private static PetTagModel generateTag() {
-        return PetTagModel.builder()
-                .id(FAKER.number().numberBetween(1L, 100L))
-                .name(FAKER.animal().name())
-                .build();
-    }
-
-    private static String generateRandomPetStatus() {
-        return PET_STATUSES.get(FAKER.number().numberBetween(0, PET_STATUSES.size()));
     }
 }

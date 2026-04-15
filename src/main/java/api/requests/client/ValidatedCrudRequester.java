@@ -30,8 +30,8 @@ public class ValidatedCrudRequester<T extends BaseModel> extends BaseRequest imp
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object put(BaseModel model) {
-        return (T) crudRequester.put(model).extract().as(endpoint.getResponseModel());
+    public Object put(long id, BaseModel model) {
+        return (T) crudRequester.put(id, model).extract().as(endpoint.getResponseModel());
     }
 
     @Override

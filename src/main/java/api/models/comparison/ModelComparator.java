@@ -18,7 +18,7 @@ public class ModelComparator {
             Object value1 = getFieldValue(request, requestField);
             Object value2 = getFieldValue(response, responseField);
 
-            if (!Objects.equals(String.valueOf(value1), String.valueOf(value2))) {
+            if (!Objects.equals(value1, value2)) {
                 mismatches.add(new Mismatch(requestField + " -> " + responseField, value1, value2));
             }
         }

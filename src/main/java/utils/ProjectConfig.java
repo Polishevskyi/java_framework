@@ -11,6 +11,12 @@ public interface ProjectConfig extends Config {
     @Key("api.baseUrl")
     String getApiBaseUrl();
 
+    @Key("api.credentials.username")
+    String getApiCredentialsUsername();
+
+    @Key("api.credentials.password")
+    String getApiCredentialsPassword();
+
     // Web Configuration
     @Key("web.baseUrl")
     String getWebBaseUrl();

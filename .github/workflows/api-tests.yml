@@ -64,6 +64,8 @@ jobs:
           cat > config.properties << EOF
           # API Configuration
           api.baseUrl=${{ secrets.API_BASE_URL }}
+          api.credentials.username=${{ secrets.API_CREDENTIALS_USERNAME }}
+          api.credentials.password=${{ secrets.API_CREDENTIALS_PASSWORD }}
           EOF
 
       - name: Run API tests

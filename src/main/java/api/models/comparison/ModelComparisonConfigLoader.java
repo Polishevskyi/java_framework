@@ -36,11 +36,9 @@ public class ModelComparisonConfigLoader {
     }
 
     public static class ComparisonRule {
-        private final String responseClassSimpleName;
         private final Map<String, String> fieldMappings;
 
         public ComparisonRule(String responseClassSimpleName, List<String> fieldPairs) {
-            this.responseClassSimpleName = responseClassSimpleName;
             this.fieldMappings = new HashMap<>();
 
             for (String pair : fieldPairs) {
@@ -52,10 +50,6 @@ public class ModelComparisonConfigLoader {
                     fieldMappings.put(pair.trim(), pair.trim());
                 }
             }
-        }
-
-        public String getResponseClassSimpleName() {
-            return responseClassSimpleName;
         }
 
         public Map<String, String> getFieldMappings() {

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PetCategoryModel {
-    private Long id;
-    private String name;
+public class BookingDatesModel {
+    private String checkin;
+    private String checkout;
 }

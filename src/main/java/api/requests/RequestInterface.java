@@ -7,7 +7,7 @@ public interface RequestInterface {
 
     Object get(long id);
 
-    Object put(BaseModel model);
+    Object put(long id, BaseModel model);
 
     Object delete(long id);
 }
