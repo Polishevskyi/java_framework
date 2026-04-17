@@ -13,7 +13,8 @@ public class BaseMockApiTest extends BaseApiTest {
 
     @BeforeClass
     public static void startWireMock() {
-        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort());
+        wireMockServer =
+                new WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort());
         wireMockServer.start();
     }
 
