@@ -32,6 +32,7 @@
         <lombok.version>1.18.38</lombok.version>
         <javafaker.version>1.0.2</javafaker.version>
         <owner.version>1.0.12</owner.version>
+        <wiremock.version>3.10.0</wiremock.version>
 
         <!-- Web Testing -->
         <selenide.version>7.5.1</selenide.version>
@@ -128,6 +129,12 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>${wiremock.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Utilities -->

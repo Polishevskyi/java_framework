@@ -18,6 +18,7 @@
 [![AspectJ](https://img.shields.io/badge/AspectJ-1.9.22-purple.svg)](https://www.eclipse.org/aspectj/)
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.38-pink.svg)](https://projectlombok.org/)
 [![Owner](https://img.shields.io/badge/Owner-1.0.12-lightgrey.svg)](https://owner.aeonbits.org/)
+[![WireMock](https://img.shields.io/badge/WireMock-3.10.0-blue.svg)](https://wiremock.org/)
 [![Spotless](https://img.shields.io/badge/Spotless-2.43.0-purple.svg)](https://github.com/diffplug/spotless)
 
 ---
@@ -108,10 +109,12 @@ java_mobile/
 │       ├── 📁 java/
 │       │   ├── 📁 api/
 │       │   │   ├── BaseApiTest.java                 # Base API test class
+│       │   │   ├── BaseMockApiTest.java             # Base WireMock test class
 │       │   │   ├── CreateBookingTest.java           # Create booking tests
 │       │   │   ├── GetBookingTest.java              # Get booking tests
 │       │   │   ├── UpdateBookingTest.java           # Update booking tests
-│       │   │   └── DeleteBookingTest.java           # Delete booking tests
+│       │   │   ├── DeleteBookingTest.java           # Delete booking tests
+│       │   │   └── ErrorHandlingBookingTest.java    # Mock error handling tests
 │       │   ├── 📁 mobile/
 │       │   │   ├── BaseMobileTest.java              # Base mobile test class
 │       │   │   ├── LoginTest.java                   # Login tests
@@ -147,6 +150,7 @@ java_mobile/
 | **Build Tool**    | Maven             | 3.6+    | Dependency management        |
 | **Testing**       | TestNG            | 7.10.2  | Test framework               |
 | **API Testing**   | REST Assured      | 5.5.1   | API automation               |
+| **Mock Testing**  | WireMock          | 3.10.0  | HTTP server mocking          |
 | **Mobile Testing**| Appium            | 9.3.0   | Mobile app automation        |
 | **Web Testing**   | Selenide          | 7.5.1   | Web UI automation            |
 | **WebDriver**     | Selenium          | 4.27.0  | WebDriver implementation     |
@@ -515,6 +519,19 @@ The retry analyzer implements TestNG's `IRetryAnalyzer` interface and can be app
 
 ---
 
+## 🎭 Mock Testing (WireMock)
+
+WireMock-based tests validate HTTP error handling in isolation — no real network calls.
+
+- **`BaseMockApiTest`** — spins up a WireMock server per test class, resets stubs before each test
+- **`ErrorHandlingBookingTest`** — parametrized across 9 error codes (400, 401, 403, 404, 422, 500, 502, 503, 504)
+
+```bash
+mvn clean test -Papi -Dtest=ErrorHandlingBookingTest
+```
+
+---
+
 ## 📊 Reporting
 
 ### 🎨 Allure Reports
@@ -672,6 +689,7 @@ All dependencies are managed via Maven in `pom.xml`:
 
 **API:**
 - **REST Assured** - API testing framework
+- **WireMock** - HTTP server mocking for isolated tests
 - **Jackson** - JSON serialization/deserialization
 - **AssertJ** - Fluent assertions
 - **Allure REST Assured** - API request/response logging
